@@ -1,4 +1,0 @@
-string data
-float64 panrate # 0.0 defaults to 30.0
----
-string[] value

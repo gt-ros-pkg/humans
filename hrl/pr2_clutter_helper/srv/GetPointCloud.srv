@@ -1,4 +1,0 @@
-string topic_name
-string msg_type #optional, will be PointCloud
----
-sensor_msgs/PointCloud cloud

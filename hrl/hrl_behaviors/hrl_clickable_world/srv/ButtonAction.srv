@@ -1,7 +1,0 @@
-int32 pixel_x
-int32 pixel_y
-string camera_frame
-int32 button_id
-string button_type
-geometry_msgs/PointStamped pixel3d
----

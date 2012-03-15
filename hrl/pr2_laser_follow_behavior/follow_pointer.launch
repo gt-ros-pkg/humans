@@ -1,5 +1,0 @@
-<launch>
-    <include file="$(find laser_interface)/laser_detector_sunny_pr2c1.launch"/>
-    <include file="$(find gt_pr2)/hsi_2dnav.launch"/>
-    <node name="look_at_point_behavior" pkg="pr2_laser_follow_behavior" type="look_at_point_behavior2.py"/>
-</launch>

@@ -1,3 +1,0 @@
-<launch>
-	<include file="$(find rfid_demos)/launch/hfa_study.launch" />
-</launch>

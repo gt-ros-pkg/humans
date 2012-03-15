@@ -1,4 +1,0 @@
-visualization_msgs/Marker table
-geometry_msgs/PointStamped approach_pt
----
-geometry_msgs/PoseArray approach_poses

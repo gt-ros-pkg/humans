@@ -1,6 +1,0 @@
-string tagid
----
-bool success # bool (not preempted & found tag)
-geometry_msgs/PointStamped ps
-
-

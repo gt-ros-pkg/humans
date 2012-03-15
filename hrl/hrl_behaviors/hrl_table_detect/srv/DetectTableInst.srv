@@ -1,3 +1,0 @@
-float32 block_time
----
-geometry_msgs/PoseArray grasp_points

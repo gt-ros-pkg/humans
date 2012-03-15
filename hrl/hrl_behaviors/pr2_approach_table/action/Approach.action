@@ -1,8 +1,0 @@
-#goal definition
-float64 forward_vel
-float64 forward_mult
----
-#result definition
-int32 rv
----
-#feedback

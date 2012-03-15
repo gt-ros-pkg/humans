@@ -1,5 +1,0 @@
-bool stop
-bool start
-time time
----
-bool success

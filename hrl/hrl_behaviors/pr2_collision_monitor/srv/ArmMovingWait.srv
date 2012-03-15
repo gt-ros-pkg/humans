@@ -1,4 +1,0 @@
-bool block
-float32 timeout
----
-bool is_moving
