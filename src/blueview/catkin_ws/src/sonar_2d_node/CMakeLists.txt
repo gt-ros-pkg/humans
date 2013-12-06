@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   syllo_common
+  syllo_blueview
   )
 
 find_package(OpenCV)

@@ -7,11 +7,10 @@ rm ${ENV_FILE_NAME}
 # Order can be important
 PACKAGES=("syllo" "blueview")
 
-# Descend into each catkin package and build it
-for i in "${PACKAGES[@]}"
-do
-    :
-    pushd "./src/${i}/catkin_ws" >& /dev/null
+# Traverse through PACKAGES in reverse order due to dependencies
+# and run clean
+for (( idx=${#PACKAGES[@]}-1 ; idx>=0 ; idx-- )) ; do
+    pushd "./src/${PACKAGES[idx]}/catkin_ws" >& /dev/null
     ./clean.sh
     popd >& /dev/null
 done

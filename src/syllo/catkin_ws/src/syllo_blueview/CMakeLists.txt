@@ -9,6 +9,25 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
+# Determine if the BLUEVIEW_SDK_ROOT has been set
+message("==================================")
+if (DEFINED ENV{BLUEVIEW_SDK_ROOT})  
+  message("Found Blueview SDK at:")
+  message("$ENV{BLUEVIEW_SDK_ROOT}")  
+else()
+  message("WARNING: Can't find the BlueView SDK")
+  message("Set the BLUEVIEW_SDK_ROOT environment variable in your .bashrc")
+  message("if you require the syllo_blueview library")
+  message("")
+  return() # exit quietly if sdk not found
+endif()
+
+# Include the BLUEVIW SDK header files
+include_directories($ENV{BLUEVIEW_SDK_ROOT}/include)
+
+# Set the Blueview SDK libraries
+set(BLUEVIEW_SDK_LIBS $ENV{BLUEVIEW_SDK_ROOT}/lib/libbvtsdk.so)
+
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
@@ -86,7 +105,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 set( LIB_NAME "syllo_blueview" )
 
 catkin_package(
-INCLUDE_DIRS include
+INCLUDE_DIRS include $ENV{BLUEVIEW_SDK_ROOT}/include
 LIBRARIES ${LIB_NAME}
 #  CATKIN_DEPENDS roscpp std_msgs
 #  DEPENDS system_lib
@@ -117,6 +136,7 @@ add_library(${LIB_NAME}
 ## Specify libraries to link a library or executable target against
  target_link_libraries(${LIB_NAME}
    ${OpenCV_LIBRARIES}
+   ${BLUEVIEW_SDK_LIBS}
    #${catkin_LIBRARIES}
  )
 

@@ -1,7 +1,7 @@
 #ifndef _SONAR_H_
 #define _SONAR_H_
 
-#define ENABLE_SONAR 0
+#define ENABLE_SONAR 1
 
 #include <cv.h>
 
