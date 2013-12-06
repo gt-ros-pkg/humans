@@ -1,6 +1,6 @@
 #include <iostream>
 #include "ros/ros.h"
-#include "common/SylloNode.h"
+#include "syllo_common/SylloNode.h"
 
 using std::cout;
 using std::endl;

@@ -8,9 +8,8 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   roscpp
   std_msgs
-  #syllo
-  #syllo_common
-)
+  syllo_common
+  )
 
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})

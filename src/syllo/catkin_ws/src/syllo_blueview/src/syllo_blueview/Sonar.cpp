@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "blueview/Sonar.h"
+#include <syllo_blueview/Sonar.h>
 
 #if ENABLE_SONAR == 1
 #include <bvt_sdk.h>

@@ -15,7 +15,7 @@
   This is a licence-free software, it can be used by anyone who try to build a better world.
 */
 
-#include "serialib.h"
+#include <syllo_serial/serialib.h>
 
 #include <string.h>
 #include <stdio.h>

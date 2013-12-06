@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-//#include <syllo/common/SylloNode.h>
+#include <syllo_common/SylloNode.h>
 
 int main(int argc, char **argv)
 {

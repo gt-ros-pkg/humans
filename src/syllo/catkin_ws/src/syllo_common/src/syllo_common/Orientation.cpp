@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "common/Orientation.h"
+#include "syllo_common/Orientation.h"
 
 using std::cout;
 using std::endl;
