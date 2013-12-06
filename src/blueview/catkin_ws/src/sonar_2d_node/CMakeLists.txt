@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   roscpp
   std_msgs
+  #syllo
   #syllo_common
 )
 
