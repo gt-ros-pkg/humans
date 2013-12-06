@@ -5,6 +5,9 @@
 #include <bvt_sdk.h>
 #endif
 
+using std::cout;
+using std::endl;
+
 namespace sonar {
      Sonar::Sonar()
      {
@@ -22,17 +25,118 @@ namespace sonar {
      Sonar::~Sonar()
      {
 #if ENABLE_SONAR == 1
-	  BVTColorImage_Destroy(cimg);
-	  BVTMagImage_Destroy(img);
-	  BVTColorMapper_Destroy(mapper);
-	  BVTSonar_Destroy(son);
+          // Causing seg faults after just init, but no grab
+	  //BVTColorImage_Destroy(cimg);
+	  //BVTMagImage_Destroy(img);
+	  //BVTColorMapper_Destroy(mapper);
+	  //BVTSonar_Destroy(son);
 #endif
      }
      
+     int Sonar::net_init(const std::string &ip)
+     {
+          //Create the discovery agent
+          BVTSonarDiscoveryAgent agent = BVTSonarDiscoveryAgent_Create();
+          if( agent == NULL )
+          {
+               printf("BVTSonarDiscoverAgent_Create: failed\n");
+               return 1;
+          }
+          
+          // Kick off the discovery process
+          int ret;
+          ret = BVTSonarDiscoveryAgent_Start(agent);
+          
+          //Let the discovery process run for a short while (5 secs)
+          cout << "Searching for sonar" << endl;
+          sleep(2);
+          
+          // See what we found
+          int numSonars = 0;
+          numSonars = BVTSonarDiscoveryAgent_GetSonarCount(agent);
+          
+          char SonarIPAddress[20];
+          
+          for(int i = 0; i < numSonars; i++)
+          {
+               ret = BVTSonarDiscoveryAgent_GetSonarInfo(agent, i, &SonarIPAddress[0], 20);
+               printf("Found Sonar: %d, IP address: %s\n", i, SonarIPAddress);
+          }
+          
+          if(numSonars == 0)
+          {
+               printf("No Sonars Found\n");
+               return(1);
+          }
+          
+          mCurPing = 0;
+
+          son = BVTSonar_Create();
+	  if (son == NULL ) {
+	       printf("BVTSonar_Create: failed\n");
+	       //return 1;
+	  }
+
+          // Open the sonar
+          ret = BVTSonar_Open(son, "NET", "192.168.1.45");
+          if( ret != 0 )
+          {
+               printf("BVTSonar_Open: ret=%d\n", ret);
+               //return 1;
+          }
+
+	  //// Open the sonar
+	  //ret = BVTSonar_Open(son, "FILE", fn.c_str());
+	  //if (ret != 0 ) {
+	  //     printf("BVTSonar_Open: ret=%d\n", ret);
+	  //     //return 1;
+	  //}
+
+	  // Make sure we have the right number of heads
+	  heads = -1;
+	  heads = BVTSonar_GetHeadCount(son);
+	  printf("BVTSonar_GetHeadCount: %d\n", heads);
+	  
+	  // Get the first head
+	  head = NULL;
+	  ret = BVTSonar_GetHead(son, 0, &head);
+	  if (ret != 0 ) {
+
+               ret = BVTSonar_GetHead(son, 1, &head);
+               if (ret != 0) {
+                    printf( "BVTSonar_GetHead: ret=%d\n", ret) ;
+                    //return 1;
+               }
+               //return 1;
+	  }
+	
+	  //// Check the ping count
+	  //pings = -1;
+	  //pings = BVTHead_GetPingCount(head);
+	  //printf("BVTHead_GetPingCount: %d\n", pings);
+
+	  // Set the range window to be 10m to 40m
+	  BVTHead_SetRange(head, mMinRange, mMaxRange);
+
+	  // Build a color mapper
+	  mapper = BVTColorMapper_Create();
+	  if (mapper == NULL) {
+	       printf("BVTColorMapper_Create: failed\n");
+	       //return 1;
+	  }
+
+	  // Load the bone colormap
+	  ret = BVTColorMapper_Load(mapper, "../sonar-processing/bvtsdk/colormaps/jet.cmap");
+	  if(ret != 0) {
+	       printf("BVTColorMapper_Load: ret=%d\n", ret);
+	       //return 1;
+	  }
+     }
+
      int Sonar::init()
      {
 #if ENABLE_SONAR == 1
-	  mCurPing = 0;
+          mCurPing = 0;
 
 	  int ret;
 	  son = BVTSonar_Create();
@@ -41,7 +145,7 @@ namespace sonar {
 	       //return 1;
 	  }
 
-	  // Open the sonar
+          // Open the sonar
 	  ret = BVTSonar_Open(son, "FILE", fn.c_str());
 	  if (ret != 0 ) {
 	       printf("BVTSonar_Open: ret=%d\n", ret);

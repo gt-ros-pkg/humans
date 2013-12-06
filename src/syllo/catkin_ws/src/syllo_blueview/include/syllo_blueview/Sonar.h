@@ -54,6 +54,7 @@ namespace sonar {
 	  int getNextSonarImage(cv::Mat &image);
 	  int reset();
 	  int init();
+          int net_init(const std::string &ip);
 	  void setRange(int minRange, int maxRange);
 	  void setSonarFile(std::string fn);
 
