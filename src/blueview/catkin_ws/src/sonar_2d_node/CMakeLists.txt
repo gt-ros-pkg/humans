@@ -1,6 +1,22 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sonar_2d)
 
+find_package(catkin QUIET COMPONENTS
+  syllo_blueview
+  )
+
+# Determine if the BLUEVIEW_SDK_ROOT has been set
+if (NOT ${syllo_blueview_FOUND})    
+  message("===============================================================")
+  message("WARNING: Can't build sonar_2d_node")
+  message("WARNING: Couldn't find syllo_blueview library.")
+  message("This is probably because syllo_blueview wasn't built because")
+  message("the environment variable, BLUEVIEW_SDK_ROOT, wasn't set.")
+  message("===============================================================")
+  return() # exit quietly if syllo_blueview not found
+endif()
+
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
