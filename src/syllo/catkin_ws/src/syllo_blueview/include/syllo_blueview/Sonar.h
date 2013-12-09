@@ -9,59 +9,56 @@
 #include <bvt_sdk.h>
 #endif
 
-namespace sonar {
+class Sonar {
+public:
+     typedef enum SonarMode{
+          net = 0,
+          sonar_file
+     }SonarMode_t;
 
-     //typedef enum {
-     //	  real = 0,
-     //	  simulated = 0
-     //}SonarMode;
+     Sonar();
+     Sonar(SonarMode_t mode, std::string ip_or_file, int min_range, int max_range);
+     ~Sonar();
+     int getNumPings();
+     int getCurrentPingNum();
+     void setFrameNum(int num);
+     int getSonarImage(cv::Mat &image, int index);
+     int getNextSonarImage(cv::Mat &image);
+     int reset();
+     int init();
+     int net_init(const std::string &ip);
+     void setRange(int min_range, int max_range);
+     void setSonarFile(std::string fn);
 
+     int height();
+     int width();
 
-     class Sonar {
-     protected:
-	  //SonarMode mMode;
-	  std::string fn;
-	  int mMode;
+protected:
+     std::string fn_;
+     std::string ip_addr_;
+     
+
+     SonarMode_t mode_;
 
 #if ENABLE_SONAR == 1
-	  BVTHead head;
-	  BVTSonar son;
+     BVTHead head_;
+     BVTSonar son_;
 
-          BVTMagImage img;
-	  BVTColorImage cimg;
-          BVTColorMapper mapper;
+     BVTMagImage img_;
+     BVTColorImage cimg_;
+     BVTColorMapper mapper_;
 #endif
 
-	  int heads;
-	  int pings;
+     int heads_;
+     int pings_;
 
-	  int mCurPing;
+     int cur_ping_;
 
-	  int mMinRange;
-	  int mMaxRange;
+     int min_range_;
+     int max_range_;
 	  
-	  int height_;
-	  int width_;
-	  
-     public:
-	  Sonar();
-	  Sonar(int mode, std::string sonarFile, int minRange, int maxRange);
-	  ~Sonar();
-	  int getNumPings();
-          int getCurrentPingNum();
-          void setFrameNum(int num);
-	  int getSonarImage(cv::Mat &image, int index);
-	  int getNextSonarImage(cv::Mat &image);
-	  int reset();
-	  int init();
-          int net_init(const std::string &ip);
-	  void setRange(int minRange, int maxRange);
-	  void setSonarFile(std::string fn);
-
-          int height();
-          int width();
-     };
-
-}
+     int height_;
+     int width_;	 
+};
 
 #endif
