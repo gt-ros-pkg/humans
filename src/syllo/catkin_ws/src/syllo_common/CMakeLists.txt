@@ -74,6 +74,7 @@ add_library(syllo_common
   src/syllo_common/SylloNode.cpp
   src/syllo_common/Orientation.cpp
   src/syllo_common/Filter.cpp
+  src/syllo_common/Utils.cpp
   #src/${PROJECT_NAME}/syllo_common.cpp
   )
 

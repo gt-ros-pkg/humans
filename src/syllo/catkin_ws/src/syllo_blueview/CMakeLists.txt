@@ -7,6 +7,7 @@ project(syllo_blueview)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
+  syllo_common
 )
 
 # Determine if the BLUEVIEW_SDK_ROOT has been set
@@ -107,7 +108,7 @@ set( LIB_NAME "syllo_blueview" )
 catkin_package(
 INCLUDE_DIRS include $ENV{BLUEVIEW_SDK_ROOT}/include
 LIBRARIES ${LIB_NAME}
-#  CATKIN_DEPENDS roscpp std_msgs
+CATKIN_DEPENDS roscpp std_msgs
 #  DEPENDS system_lib
 )
 
