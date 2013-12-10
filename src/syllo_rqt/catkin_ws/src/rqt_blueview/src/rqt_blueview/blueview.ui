@@ -91,7 +91,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QCheckBox" name="log">
+        <widget class="QCheckBox" name="log_checkbox">
          <property name="text">
           <string>Log Raw Sonar Data</string>
          </property>

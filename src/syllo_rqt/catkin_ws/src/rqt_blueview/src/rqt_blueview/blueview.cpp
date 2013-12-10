@@ -34,6 +34,8 @@
 
 #include <std_msgs/String.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/Float32.h>
+#include <std_msgs/Bool.h>
 
 #include <rqt_blueview/blueview.h>
 
@@ -72,6 +74,7 @@ namespace rqt_blueview {
           connect(ui_.thresh_slider, SIGNAL(sliderMoved(int)), this, SLOT(onThreshDistSliderChanged(int)));
           connect(ui_.thresh_spinbox, SIGNAL(valueChanged(double)), this, SLOT(onThreshDistSpinboxChanged(double)));
           
+          connect(ui_.log_checkbox, SIGNAL(stateChanged(int)), this, SLOT(onLogChecked(int)));
 
           //// Enable / disable Heading/Depth checkboxes
           //connect(ui_.desired_heading_checkbox, SIGNAL(toggled(bool)), this, SLOT(onEnableDesiredHeading(bool)));
@@ -81,7 +84,10 @@ namespace rqt_blueview {
           //connect(ui_.set_heading_button, SIGNAL(clicked(bool)), this, SLOT(onSetHeading(bool)));
           //
           //// Create publish and subscriber example
-          //this->publisher_ = getNodeHandle().advertise<std_msgs::String>("HELLO_WORLD", 1000);
+          this->max_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_max_range", 1);
+          this->min_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_min_range", 1);
+          this->enable_log_pub_ = getNodeHandle().advertise<std_msgs::Bool>("/videoray/sonar_enable_log", 1);
+          this->thresh_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_thresh", 1);
           //this->subscriber_ = getNodeHandle().subscribe<std_msgs::Int32>("WRITE_HERE", 1, &blueview::callbackNum, this);         
      }
      
@@ -123,12 +129,16 @@ namespace rqt_blueview {
 
      void blueview::onMinDistSliderChanged(int value)
      {
-          ui_.min_dist_spinbox->setValue(value);
+          ui_.min_dist_spinbox->setValue(value);          
      }
 
      void blueview::onMinDistSpinboxChanged(double value)
      {
           ui_.min_dist_slider->setValue((int)value);
+
+          std_msgs::Float32 msg;
+          msg.data = value;
+          min_range_pub_.publish(msg);
      }
 
      void blueview::onMaxDistSliderChanged(int value)
@@ -139,6 +149,10 @@ namespace rqt_blueview {
      void blueview::onMaxDistSpinboxChanged(double value)
      {
           ui_.max_dist_slider->setValue((int)value);
+
+          std_msgs::Float32 msg;
+          msg.data = value;
+          max_range_pub_.publish(msg);
      }
 
      void blueview::onThreshDistSliderChanged(int value)
@@ -149,6 +163,22 @@ namespace rqt_blueview {
      void blueview::onThreshDistSpinboxChanged(double value)
      {
           ui_.thresh_slider->setValue((int)value);
+
+          std_msgs::Float32 msg;
+          msg.data = value;
+          thresh_pub_.publish(msg);
+     }
+
+     void blueview::onLogChecked(int enable)
+     {
+          std_msgs::Bool msg;
+          if (enable) {               
+               msg.data = true;
+               
+          } else {
+               msg.data = false;
+          }
+          enable_log_pub_.publish(msg);
      }
 
      void blueview::callbackNum(const std_msgs::Int32ConstPtr& msg)

@@ -91,6 +91,9 @@ namespace rqt_blueview {
           virtual void onThreshDistSliderChanged(int value);
           virtual void onThreshDistSpinboxChanged(double value);
 
+          virtual void onLogChecked(int enable);
+
+
      protected:
 
           virtual void callbackNum(const std_msgs::Int32ConstPtr& msg);
@@ -99,8 +102,11 @@ namespace rqt_blueview {
 
           QWidget* widget_;
 
-          ros::Publisher publisher_;
-          ros::Subscriber subscriber_;
+          ros::Publisher max_range_pub_;
+          ros::Publisher min_range_pub_;
+          ros::Publisher enable_log_pub_;
+          ros::Publisher thresh_pub_;
+          //ros::Subscriber subscriber_;
 
      };
 
