@@ -4,7 +4,7 @@
 /// @file Utils.h
 /// @author Kevin DeMarco <kevin.demarco@gmail.com>
 ///
-/// Time-stamp: <2013-12-09 12:13:13 syllogismrxs>
+/// Time-stamp: <2013-12-09 18:40:45 syllogismrxs>
 ///
 /// @version 1.0
 /// Created: 09 Dec 2013
@@ -41,6 +41,7 @@
 
 namespace syllo {
      std::string get_time_string();
+     std::string get_current_directory();
 }
 
 #endif

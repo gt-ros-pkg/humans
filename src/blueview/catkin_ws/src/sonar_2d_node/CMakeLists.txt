@@ -26,6 +26,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   syllo_common
   syllo_blueview
+  cv_bridge
+  image_transport
+  sensor_msgs
   )
 
 find_package(OpenCV)

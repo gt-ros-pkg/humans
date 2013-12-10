@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <fstream>
 
 #include <syllo_blueview/Sonar.h>
 #include <syllo_common/Utils.h>
@@ -14,7 +15,7 @@ using std::endl;
 Sonar::Sonar()
      : initialized_(false), fn_(""), ip_addr_(""), logging_(false), 
        mode_(Sonar::net), data_mode_(Sonar::image), min_range_(0), 
-       max_range_(40), color_map_("")
+       max_range_(40), color_map_(""), save_directory_("./")
 {
 }
 
@@ -251,7 +252,6 @@ int Sonar::init()
      }
 
      // Load the bone colormap
-     //ret = BVTColorMapper_Load(mapper_, "../sonar-processing/bvtsdk/colormaps/jet.cmap");
      ret = BVTColorMapper_Load(mapper_, color_map_.c_str());
      if(ret != 0) {
           if (color_map_ == "") {
@@ -264,7 +264,7 @@ int Sonar::init()
      ////////////////////////////////////////////////////////////////
      // Setup the sonar file logger utilities
      ////////////////////////////////////////////////////////////////
-     BVTSonar son_logger_ = BVTSonar_Create();
+     son_logger_ = BVTSonar_Create();
      if (son_logger_ == NULL) {
           printf("BVTSonar_Create: failed\n");
           return -1;
@@ -273,7 +273,6 @@ int Sonar::init()
      initialized_ = true;
 
      return 0;
-     
 #else
      return -1;
 #endif
@@ -310,7 +309,9 @@ int Sonar::SonarLogEnable(bool enable)
      }
 
      // Create the sonar file
-     cur_log_file_ = syllo::get_time_string() + ".son";
+     cur_log_file_ = save_directory_ + "/" + syllo::get_time_string() + ".son";
+     //cur_log_file_ = "/home/syllogismrxs/test.son";
+
      int ret = BVTSonar_CreateFile(son_logger_, cur_log_file_.c_str(), 
                                    son_, "");
      
@@ -318,7 +319,7 @@ int Sonar::SonarLogEnable(bool enable)
           printf("BVTSonar_CreateFile: ret=%d\n", ret);
           return -1;
      }
-
+     
      // Get the first head of the file output
      out_head_ = NULL ;
      ret = BVTSonar_GetHead(son_logger_, 0, &out_head_);
@@ -435,13 +436,30 @@ void Sonar::set_input_son_filename(const std::string &fn)
      fn_ = fn;
 }
 
-void Sonar::set_range(int min_range, int max_range)
+void Sonar::set_range(double min_range, double max_range)
 {
      min_range_ = min_range;
      max_range_ = max_range;
+
+     BVTHead_SetRange(head_, min_range_, max_range_);
+}
+
+void Sonar::set_min_range(double min_range)
+{
+     this->set_range(min_range, max_range_);     
+}
+
+void Sonar::set_max_range(double max_range)
+{
+     this->set_range(min_range_, max_range);     
 }
 
 void Sonar::set_color_map(const std::string &color_map)
 {
      color_map_ = color_map;
+}
+
+void Sonar::set_save_directory(const std::string &save_directory)
+{
+     save_directory_ = save_directory;
 }

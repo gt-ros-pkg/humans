@@ -37,8 +37,11 @@ public:
      void set_data_mode(DataMode_t data_mode);
      void set_ip_addr(const std::string &ip_addr);
      void set_input_son_filename(const std::string &fn);
-     void set_range(int min_range, int max_range);
+     void set_range(double min_range, double max_range);
+     void set_max_range(double max_range);
+     void set_min_range(double min_range);
      void set_color_map(const std::string &color_map);
+     void set_save_directory(const std::string &save_directory);
 
      int SonarLogEnable(bool enable);
 
@@ -55,6 +58,7 @@ protected:
      DataMode_t data_mode_;
      
      std::string cur_log_file_;
+     std::string save_directory_;
 
 
 #if ENABLE_SONAR == 1
@@ -77,8 +81,8 @@ protected:
 
      int cur_ping_;
 
-     int min_range_;
-     int max_range_;
+     double min_range_;
+     double max_range_;
 	  
      int height_;
      int width_;	 
