@@ -9,6 +9,10 @@
                <param name="max_dist" type="double" value="100.0" />
                <param name="mode" type="string" value="image" />
                <param name="color_map" type="string" value="/home/syllogismrxs/repos/sonar-processing/bvtsdk/colormaps/jet.cmap" />
+               <param name="save_directory" type="string" value="/home/syllogismrxs/sonar_log" />
          </node>
+         
+         <node pkg="image_view" name="image_view_sonar" type="image_view" args="image:=sonar_image"/>
+         
   </group>
 </launch>
