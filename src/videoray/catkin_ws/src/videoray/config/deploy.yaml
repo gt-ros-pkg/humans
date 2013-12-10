@@ -1,0 +1,6 @@
+videoray_ns:        
+        tick_rate: 50
+
+joystick_ns:
+        joystick_dev: /dev/input/js1
+        tick_rate: 100

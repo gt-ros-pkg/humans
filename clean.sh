@@ -5,7 +5,7 @@ rm ${ENV_FILE_NAME}
 
 # List of catkin packages to build
 # Order can be important
-PACKAGES=("syllo" "blueview")
+PACKAGES=("syllo" "videoray" "syllo_rqt" "blueview")
 
 # Traverse through PACKAGES in reverse order due to dependencies
 # and run clean

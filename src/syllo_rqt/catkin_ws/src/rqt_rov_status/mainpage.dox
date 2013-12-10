@@ -1,0 +1,6 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+\b rqt_rov_status is a plugin.
+*/

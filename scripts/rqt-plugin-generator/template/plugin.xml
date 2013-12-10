@@ -1,0 +1,12 @@
+<library path="lib/librqt_(>>>APP-NAME<<<)">
+  <class name="rqt_(>>>APP-NAME<<<)/(>>>APP-NAME<<<)" type="rqt_(>>>APP-NAME<<<)::(>>>APP-NAME<<<)" base_class_type="rqt_gui_cpp::Plugin">
+    <description>
+      A GUI plugin.
+    </description>
+    <qtgui>
+      <label>(>>>APP-NAME<<<)</label>
+      <icon type="theme">image-x-generic</icon>
+      <statustip>A GUI plugin.</statustip>
+    </qtgui>
+  </class>
+</library>

@@ -1,0 +1,6 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+\b rqt_thrust_monitor is a plugin.
+*/

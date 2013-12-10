@@ -1,0 +1,10 @@
+<launch>
+
+  <group ns="videoray">
+    <node pkg="videoray" name="videoray_sim_and_control" type="videoray_sim_and_control" output="screen"/>
+    <!-- <node pkg="videoray" name="videoray_sim" type="videoray_sim" output="screen"/> -->
+    <!-- <node pkg="videoray" name="videoray_control_p" type="videoray_control_p" output="screen"/> -->
+    <!-- <node pkg="moosros" name="Bridge" type="Bridge" args="moosrosconfig.xml mission.moos" output="screen"/> -->
+  </group>
+
+</launch>

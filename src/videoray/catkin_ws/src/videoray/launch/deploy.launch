@@ -1,0 +1,19 @@
+<launch>
+
+<arg name="record_videoray" default="true" />
+
+<rosparam file="$(find videoray)/config/deploy.yaml"/>
+
+  <group ns="videoray_ns">
+         <node pkg="videoray" name="videoray_1" type="control" output="screen"/>
+  </group>
+
+  <group ns="joystick_ns">
+    <node pkg="input" name="joystick_1" type="joystick" output="screen"/>
+  </group>
+  
+  <node pkg="rosbag" type="record" name="rosbag_record_videoray"
+      args="-a -o /tmp/videoray-ros-data"
+      if="$(arg record_videoray)" />
+
+</launch>

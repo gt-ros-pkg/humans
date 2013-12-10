@@ -1,0 +1,21 @@
+<launch>
+
+  <group ns="videoray">
+
+    <param name="xml_config" value="/home/syllogismrxs/repos/syllo-moos/share/missions/uhri_sim/moos-sim.xml" />
+    <param name="moos_config" value="/home/syllogismrxs/repos/syllo-moos/share/missions/uhri_sim/targ_videoray.moos" />
+
+    <node pkg="videoray" name="videoray_moos" type="videoray_moos" output="screen"/>
+    <node pkg="moosros" name="Bridge" type="Bridge" output="screen"/>
+  </group>
+
+  <group ns="diver">
+
+    <param name="xml_config" value="/home/syllogismrxs/repos/syllo-moos/share/missions/uhri_sim/moos-sim.xml" />
+    <param name="moos_config" value="/home/syllogismrxs/repos/syllo-moos/share/missions/uhri_sim/targ_diver.moos" />
+
+    <node pkg="videoray" name="videoray_moos" type="videoray_moos" output="screen"/>
+    <node pkg="moosros" name="Bridge" type="Bridge" output="screen"/>
+  </group>
+
+</launch>

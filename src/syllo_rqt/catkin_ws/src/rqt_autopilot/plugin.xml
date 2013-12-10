@@ -1,0 +1,12 @@
+<library path="lib/librqt_autopilot">
+  <class name="rqt_autopilot/Autopilot" type="rqt_autopilot::Autopilot" base_class_type="rqt_gui_cpp::Plugin">
+    <description>
+      A GUI plugin to control autopilot set points.
+    </description>
+    <qtgui>
+      <label>Autopilot</label>
+      <icon type="theme">image-x-generic</icon>
+      <statustip>A GUI plugin to control autopilot set points.</statustip>
+    </qtgui>
+  </class>
+</library>

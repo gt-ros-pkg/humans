@@ -2,8 +2,7 @@
 
 # List of catkin packages to build
 # Order can be important
-PACKAGES=("syllo" "blueview")
-
+PACKAGES=("syllo" "videoray" "syllo_rqt" "blueview")
 
 # Generate setenv.sh file on every build
 ENV_FILE_NAME="./setenv.sh"

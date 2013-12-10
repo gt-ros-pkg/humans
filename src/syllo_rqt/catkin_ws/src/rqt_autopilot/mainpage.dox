@@ -1,0 +1,6 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+\b rqt_autopilot provides a GUI plugin for entering autopilot set points
+*/

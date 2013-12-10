@@ -1,0 +1,9 @@
+std_msgs/Header header
+float32 water_temp
+float32 tether_voltage
+float32 voltage_12V
+float32 current_12V
+float32 internal_temp
+float32 internal_relative_humidity
+float32 comm_err_count
+int32 firmware_version
