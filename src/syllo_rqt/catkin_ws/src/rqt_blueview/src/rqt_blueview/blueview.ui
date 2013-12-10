@@ -34,6 +34,9 @@
        <property name="maximum">
         <number>200</number>
        </property>
+       <property name="value">
+        <number>100</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -65,6 +68,9 @@
        <property name="maximum">
         <number>200</number>
        </property>
+       <property name="value">
+        <number>0</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -81,6 +87,9 @@
       <widget class="QDoubleSpinBox" name="max_dist_spinbox">
        <property name="maximum">
         <double>200.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>100.000000000000000</double>
        </property>
       </widget>
      </item>

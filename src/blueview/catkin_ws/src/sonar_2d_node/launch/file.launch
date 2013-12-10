@@ -4,8 +4,8 @@
                <param name="tick_rate" type="double" value="10.0" />
                <param name="net_or_file" type="string" value="file" />
                <param name="ip_addr" type="string" value="0.0.0.0" />
-               <!--<param name="sonar_file" type="string" value="/home/syllogismrxs/repos/sonar-data/2012-12-04_T15-20-03-271993Z.son" /> -->
-               <param name="sonar_file" type="string" value="/home/syllogismrxs/sonar_log/2013-12-10_15-10-01.son" />
+               <param name="sonar_file" type="string" value="/home/syllogismrxs/repos/sonar-data/2012-12-04_T15-20-03-271993Z.son" />
+               <!-- <param name="sonar_file" type="string" value="/home/syllogismrxs/sonar_log/2013-12-10_15-10-01.son" /> -->
                <param name="min_dist" type="double" value="0" />
                <param name="max_dist" type="double" value="40" />
                <param name="mode" type="string" value="image" />

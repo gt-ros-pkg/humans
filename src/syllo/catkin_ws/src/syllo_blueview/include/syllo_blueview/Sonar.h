@@ -21,18 +21,21 @@ public:
           range
      }DataMode_t;
 
+     typedef enum Status{
+          Success = 0,
+          Failure
+     }Status_t;
+
      Sonar();
-     //Sonar(SonarMode_t mode, std::string ip_or_file, int min_range, int max_range);
      ~Sonar();
      int getNumPings();
      int getCurrentPingNum();
      void setFrameNum(int num);
-     int getSonarImage(cv::Mat &image, int index);
-     int getNextSonarImage(cv::Mat &image);
+     Status_t getSonarImage(cv::Mat &image, int index);
+     Status_t getNextSonarImage(cv::Mat &image);
      int reset();
-     int init();
-     //int net_init(const std::string &ip);
-
+     Status_t init();
+     
      void set_mode(SonarMode_t mode);
      void set_data_mode(DataMode_t data_mode);
      void set_ip_addr(const std::string &ip_addr);
@@ -43,7 +46,7 @@ public:
      void set_color_map(const std::string &color_map);
      void set_save_directory(const std::string &save_directory);
 
-     int SonarLogEnable(bool enable);
+     Status_t SonarLogEnable(bool enable);
 
      int height();
      int width();

@@ -114,7 +114,7 @@ int main(int argc, char **argv)
 
      // Initialize the sonar
      sonar.init();
-
+     
      //Subscribe to range commands
      ros::Subscriber min_range_sub = nh.subscribe("sonar_min_range", 1, 
                                                  MinRangeCallback);
