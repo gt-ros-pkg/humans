@@ -1,19 +1,15 @@
 <launch>
   <group ns="videoray">
-         <node pkg="sonar_2d" name="sonar_2d_image" type="sonar_2d_node" output="screen">
-               <param name="tick_rate" type="double" value="10.0" />
-               <param name="net_or_file" type="string" value="file" />
-               <param name="ip_addr" type="string" value="0.0.0.0" />
-               <param name="sonar_file" type="string" value="/home/syllogismrxs/repos/sonar-data/2012-12-04_T15-20-03-271993Z.son" />
-               <!-- <param name="sonar_file" type="string" value="/home/syllogismrxs/sonar_log/2013-12-10_15-10-01.son" /> -->
-               <param name="min_dist" type="double" value="0" />
-               <param name="max_dist" type="double" value="40" />
-               <param name="mode" type="string" value="image" />
-               <param name="color_map" type="string" value="/home/syllogismrxs/repos/sonar-processing/bvtsdk/colormaps/jet.cmap" />
-               <param name="save_directory" type="string" value="/home/syllogismrxs/sonar_log" />
-         </node>
 
+         <remap from="sonar_max_range" to="rqt_blueview/sonar_max_range" />  
+         <remap from="sonar_min_range" to="rqt_blueview/sonar_min_range" />  
+         <remap from="sonar_thresh" to="rqt_blueview/sonar_thresh" />        
+         <remap from="sonar_enable_log" to="rqt_blueview/sonar_enable_log" />
+         <include file="$(find sonar_2d)/launch/sonar-playback.xml" />         
+         
          <node pkg="image_view" name="image_view_sonar" type="image_view" args="image:=sonar_image"/>
-
+         
+         <node pkg="rqt_blueview" name="rqt_blueview" type="rqt_blueview" />
   </group>
+
 </launch>

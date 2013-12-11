@@ -84,10 +84,10 @@ namespace rqt_blueview {
           //connect(ui_.set_heading_button, SIGNAL(clicked(bool)), this, SLOT(onSetHeading(bool)));
           //
           //// Create publish and subscriber example
-          this->max_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_max_range", 1);
-          this->min_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_min_range", 1);
-          this->enable_log_pub_ = getNodeHandle().advertise<std_msgs::Bool>("/videoray/sonar_enable_log", 1);
-          this->thresh_pub_ = getNodeHandle().advertise<std_msgs::Float32>("/videoray/sonar_thresh", 1);
+          this->max_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("sonar_max_range", 1);
+          this->min_range_pub_ = getNodeHandle().advertise<std_msgs::Float32>("sonar_min_range", 1);
+          this->enable_log_pub_ = getNodeHandle().advertise<std_msgs::Bool>("sonar_enable_log", 1);
+          this->thresh_pub_ = getNodeHandle().advertise<std_msgs::Float32>("sonar_thresh", 1);
           //this->subscriber_ = getNodeHandle().subscribe<std_msgs::Int32>("WRITE_HERE", 1, &blueview::callbackNum, this);         
      }
      
