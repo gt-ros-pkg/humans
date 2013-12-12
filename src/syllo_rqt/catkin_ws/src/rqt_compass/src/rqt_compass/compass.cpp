@@ -74,7 +74,7 @@ namespace rqt_compass {
           ui_.Compass->setNeedle(needle_);
                     
           // Create subscriber
-          this->subscriber_ = getNodeHandle().subscribe<geometry_msgs::PoseStamped>("/pose", 1, &compass::callback_pose, this);
+          this->subscriber_ = getNodeHandle().subscribe<geometry_msgs::PoseStamped>("pose", 1, &compass::callback_pose, this);
      }
      
 

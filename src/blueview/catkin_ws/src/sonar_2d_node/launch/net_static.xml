@@ -1,6 +1,6 @@
 <launch>
   <node pkg="sonar_2d" name="sonar_2d_image" type="sonar_2d_node" output="screen">
-    <param name="tick_rate" type="double" value="10.0" />
+    <param name="tick_rate" type="double" value="20.0" />
     <param name="net_or_file" type="string" value="net" />
     <param name="ip_addr" type="string" value="192.168.1.45" />
     <param name="sonar_file" type="string" value="/home/syllogismrxs/repos/sonar-data/2012-12-04_T15-20-03-271993Z.son" />

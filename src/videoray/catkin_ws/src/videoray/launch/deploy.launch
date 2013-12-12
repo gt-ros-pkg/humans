@@ -1,23 +1,45 @@
 <launch>
 
   <arg name="record_videoray" default="false" />
-
-  <!-- <rosparam file="$(find videoray)/config/deploy.yaml"/> -->
+  <arg name="gui_enable" default="true" />
 
   <group ns="videoray">
-    
+  
+    <!-- Primary VideoRay Control Node -->
+    <remap from="pose" to="/rqt_compass/pose" />
+    <remap from="pose_only" to="/pose_only" />
+    <remap from="throttle_cmd" to="/rqt_thrust_monitor/throttle_cmd" />
+    <remap from="desired_trajectory" to="/rqt_autopilot/desired_trajectory" />
     <node pkg="videoray" name="videoray_control" type="control" output="screen">
       <param name="tick_rate" type="double" value="50" />
     </node>
-    
+   
+    <!-- Joystick Control Node -->
     <node pkg="input" name="joystick_1" type="joystick" output="screen">
       <param name="tick_rate" type="double" value="100" />
     </node>
   
   </group>
 
+  <!-- rosbag - log data node -->
   <node pkg="rosbag" type="record" name="rosbag_record_videoray"
         args="-a -o /tmp/videoray-ros-data"
         if="$(arg record_videoray)" />
+
+  <!-- ================ -->
+  <!-- Startup the GUIS -->
+  <!-- ================ -->
+
+  <!-- BlueView Control GUI -->
+  <node pkg="rqt_blueview" name="rqt_blueview" type="rqt_blueview"
+        if="$(arg gui_enable)" />
+
+  <!-- Compass -->
+  <node pkg="rqt_compass" name="rqt_compass" type="rqt_compass"
+        if="$(arg gui_enable)" />
+
+  <!-- Autopilot -->
+  <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot"
+        if="$(arg gui_enable)" />
 
 </launch>

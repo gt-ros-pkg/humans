@@ -92,6 +92,7 @@ namespace rqt_thrust_monitor {
           QWidget* widget_;
 
           ros::Subscriber subscriber_;
+          int update_counter_;
      };
 
 }

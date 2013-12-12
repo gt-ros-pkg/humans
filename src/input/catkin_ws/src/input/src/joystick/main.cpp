@@ -26,7 +26,7 @@ int main(int argc, char **argv)
      ros::param::set("joystick_dev", joystick_dev);
 
      // Notify roscore of joystick publication
-     ros::Publisher joystick_pub_ = n_.advertise<sensor_msgs::Joy>("/joystick", 1);     
+     ros::Publisher joystick_pub_ = n_.advertise<sensor_msgs::Joy>("joystick", 1);     
 
      // Create a joystick instance
      Joystick joy_;

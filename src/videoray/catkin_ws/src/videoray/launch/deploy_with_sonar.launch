@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- Launch the regular VideoRay deploy file -->
+  <include file="$(find videoray)/launch/deploy.launch" />
+
+  <group ns="videoray">  
+    <!-- BlueView Sonar Node -->
+    <remap from="sonar_max_range" to="/rqt_blueview/sonar_max_range" />  
+    <remap from="sonar_min_range" to="/rqt_blueview/sonar_min_range" />  
+    <remap from="sonar_thresh" to="/rqt_blueview/sonar_thresh" />        
+    <remap from="sonar_enable_log" to="/rqt_blueview/sonar_enable_log" />
+    <!-- <include file="$(find sonar_2d)/launch/net_search.xml" /> -->
+    <include file="$(find sonar_2d)/launch/net_static.xml" />
+    
+    <!-- Display Sonar Image Node -->
+    <node pkg="image_view" name="image_view_sonar" type="image_view" args="image:=sonar_image"/>
+  </group>
+
+</launch>

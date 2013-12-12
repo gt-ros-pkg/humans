@@ -47,8 +47,8 @@ int main(int argc, char **argv)
      ros::NodeHandle nh;
      
      SylloNode node;
-     node.init();     
-          
+     node.init();          
+     
      ///////////////////////////////////////////////////
      // Acquire params from paramserver
      ///////////////////////////////////////////////////
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
      // Image sensor message
      sensor_msgs::Image msg;
 
-     while (ros::ok()) {
+     while (ros::ok()) {          
           cv::Mat img;          
           int status = sonar.getNextSonarImage(img);
                     

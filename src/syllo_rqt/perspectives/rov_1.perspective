@@ -1,0 +1,280 @@
+{
+  "keys": {}, 
+  "groups": {
+    "pluginmanager": {
+      "keys": {
+        "running-plugins": {
+          "type": "repr", 
+          "repr": "{u'rqt_pose_view/PoseView': [1], u'rqt_compass/compass': [1], u'rqt_image_view/ImageView': [2, 1], u'rqt_thrust_monitor/thrust_monitor': [1], u'rqt_autopilot/Autopilot': [1], u'rqt_blueview/blueview': [1]}"
+        }
+      }, 
+      "groups": {
+        "plugin__rqt_robot_steering__RobotSteering__1": {
+          "keys": {}, 
+          "groups": {
+            "plugin": {
+              "keys": {
+                "topic": {
+                  "type": "repr", 
+                  "repr": "u'/cmd_vel'"
+                }, 
+                "vx_min": {
+                  "type": "repr", 
+                  "repr": "u'-1'"
+                }, 
+                "vw_min": {
+                  "type": "repr", 
+                  "repr": "u'-3'"
+                }, 
+                "vw_max": {
+                  "type": "repr", 
+                  "repr": "u'3'"
+                }, 
+                "vx_max": {
+                  "type": "repr", 
+                  "repr": "u'1'"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_image_view__ImageView__2": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__ImageViewWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }, 
+            "plugin": {
+              "keys": {
+                "dynamic_range": {
+                  "type": "repr", 
+                  "repr": "False"
+                }, 
+                "max_range": {
+                  "type": "repr", 
+                  "repr": "10.0"
+                }, 
+                "topic": {
+                  "type": "repr", 
+                  "repr": "u''"
+                }, 
+                "zoom1": {
+                  "type": "repr", 
+                  "repr": "False"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_reconfigure__Param__1": {
+          "keys": {}, 
+          "groups": {
+            "plugin": {
+              "keys": {
+                "splitter": {
+                  "type": "repr(QByteArray.hex)", 
+                  "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff0000000000000002000000c00000006401000000060100000001')", 
+                  "pretty-print": "         d     "
+                }, 
+                "_splitter": {
+                  "type": "repr(QByteArray.hex)", 
+                  "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000000000020000013e0000006401000000090100000002')", 
+                  "pretty-print": "       > d     "
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_image_view__ImageView__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__ImageViewWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }, 
+            "plugin": {
+              "keys": {
+                "dynamic_range": {
+                  "type": "repr", 
+                  "repr": "False"
+                }, 
+                "max_range": {
+                  "type": "repr", 
+                  "repr": "10.0"
+                }, 
+                "topic": {
+                  "type": "repr", 
+                  "repr": "u''"
+                }, 
+                "zoom1": {
+                  "type": "repr", 
+                  "repr": "False"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_autopilot__Autopilot__1": {
+          "keys": {}, 
+          "groups": {
+            "plugin": {
+              "keys": {
+                "desired_depth": {
+                  "type": "repr", 
+                  "repr": "0.0"
+                }, 
+                "desired_heading": {
+                  "type": "repr", 
+                  "repr": "0.0"
+                }
+              }, 
+              "groups": {}
+            }, 
+            "dock_widget__AutopilotWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "False"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_pose_view__PoseView__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__GLViewWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }, 
+            "plugin": {
+              "keys": {
+                "view_matrix": {
+                  "type": "repr", 
+                  "repr": "u'[[0.8957515358924866, -0.19724838435649872, 0.39840075373649597, 0.0], [0.442462295293808, 0.30872035026550293, -0.841972827911377, 0.0], [0.04308321326971054, 0.9304746985435486, 0.3638118803501129, 0.0], [-2.710585117340088, -2.4402060508728027, -8.5, 1.0]]'"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_blueview__blueview__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__blueviewWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_thrust_monitor__thrust_monitor__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__thrust_monitorWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }, 
+        "plugin__rqt_compass__compass__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__compassWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }
+              }, 
+              "groups": {}
+            }
+          }
+        }
+      }
+    }, 
+    "mainwindow": {
+      "keys": {
+        "geometry": {
+          "type": "repr(QByteArray.hex)", 
+          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb0001000000000000000000180000068f000003de00000001000000340000068e000003dd000000000000')", 
+          "pretty-print": "               4       "
+        }, 
+        "state": {
+          "type": "repr(QByteArray.hex)", 
+          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000030000068e0000037bfc0100000008fb00000076007200710074005f007400680072007500730074005f006d006f006e00690074006f0072005f005f007400680072007500730074005f006d006f006e00690074006f0072005f005f0031005f005f007400680072007500730074005f006d006f006e00690074006f00720057006900640067006500740100000000000001260000010e00fffffffc0000012c000001900000017100fffffffc0200000003fb00000058007200710074005f006100750074006f00700069006c006f0074005f005f004100750074006f00700069006c006f0074005f005f0031005f005f004100750074006f00700069006c006f00740057006900640067006500740100000019000000760000007100fffffffb00000050007200710074005f0070006f00730065005f0076006900650077005f005f0050006f007300650056006900650077005f005f0031005f005f0047004c00560069006500770057006900640067006500740100000095000001140000004700fffffffb0000004c007200710074005f0063006f006d0070006100730073005f005f0063006f006d0070006100730073005f005f0031005f005f0063006f006d007000610073007300570069006400670065007401000001af000001e50000007d00fffffffc000002c2000003cc0000024800fffffffc0100000003fc000002c2000002b40000013000fffffffa000000000200000002fb0000005a007200710074005f0069006d006100670065005f0076006900650077005f005f0049006d0061006700650056006900650077005f005f0032005f005f0049006d00610067006500560069006500770057006900640067006500740100000000ffffffff0000008400fffffffb0000005a007200710074005f0069006d006100670065005f0076006900650077005f005f0049006d0061006700650056006900650077005f005f0031005f005f0049006d0061006700650056006900650077005700690064006700650074010000001c0000039c0000008400fffffffc000004150000014a0000000000fffffffa000000000100000001fb00000030005f005f0044006f0063006b0057006900640067006500740043006f006e007400610069006e00650072005f005f00310100000000ffffffff0000000000000000fb00000052007200710074005f0062006c007500650076006900650077005f005f0062006c007500650076006900650077005f005f0031005f005f0062006c007500650076006900650077005700690064006700650074010000057c000001120000011200fffffffb00000030005f005f0044006f0063006b0057006900640067006500740043006f006e007400610069006e00650072005f005f003201000005e1000000af0000000000000000fb00000042007200710074005f006e00610076005f0076006900650077005f005f004e0061007600690067006100740069006f006e0056006900650077005f005f0031005f005f0100000000000006900000000000000000fb0000006c007200710074005f007200650063006f006e006600690067007500720065005f005f0050006100720061006d005f005f0031005f005f005f0070006c007500670069006e0063006f006e007400610069006e00650072005f0074006f0070005f007700690064006700650074010000040d000001370000000000000000fb00000022007200710074005f0074006f0070005f005f0054004f0050005f005f0031005f005f0000000000ffffffff0000000000000000fb0000006a007200710074005f0072006f0062006f0074005f007300740065006500720069006e0067005f005f0052006f0062006f0074005300740065006500720069006e0067005f005f0031005f005f0052006f0062006f0074005300740065006500720069006e00670055006901000005710000010100000000000000000000068e0000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')", 
+          "pretty-print": "                 vrqt_thrust_monitor__thrust_monitor__1__thrust_monitorWidget          ,   q                                                       v q                                                  G                                                }                   0                                                                                                                                      0__DockWidgetContainer__1          Rrqt_blueview__blueview__1__blueviewWidget          0__DockWidgetContainer__2          Brqt_nav_view__NavigationView__1__          lrqt_reconfigure__Param__1___plugincontainer_top_widget          \"rqt_top__TOP__1__          jrqt_robot_steering__RobotSteering__1__RobotSteeringUi                            6MinimizedDockWidgetsToolbar        "
+        }
+      }, 
+      "groups": {
+        "toolbar_areas": {
+          "keys": {
+            "MinimizedDockWidgetsToolbar": {
+              "type": "repr", 
+              "repr": "8"
+            }
+          }, 
+          "groups": {}
+        }
+      }
+    }
+  }
+}

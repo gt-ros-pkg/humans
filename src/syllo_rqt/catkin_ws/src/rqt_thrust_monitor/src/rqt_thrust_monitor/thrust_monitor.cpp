@@ -64,9 +64,9 @@ namespace rqt_thrust_monitor {
           }
           context.addWidget(widget_);
 
-          this->subscriber_ = getNodeHandle().subscribe<videoray::Throttle>("/throttle_cmd", 1, &thrust_monitor::callback_throttle, this);
-     }
-     
+          update_counter_ = 0;
+          this->subscriber_ = getNodeHandle().subscribe<videoray::Throttle>("throttle_cmd", 100, &thrust_monitor::callback_throttle, this);
+     }     
 
      bool thrust_monitor::eventFilter(QObject* watched, QEvent* event)
      {
@@ -88,17 +88,23 @@ namespace rqt_thrust_monitor {
           //double desired_heading = instance_settings.value("desired_heading", ui_.desired_heading_double_spin_box->value()).toDouble();
           //ui_.desired_heading_double_spin_box->setValue(desired_heading);          
      }
-          
+     
      void thrust_monitor::callback_throttle(const videoray::ThrottleConstPtr& msg)
      {
-          ui_.port_slider->setValue(msg->PortInput);
-          ui_.port_spinbox->setValue(msg->PortInput);
+          if ( update_counter_ > 5) {
+               update_counter_ = 0;
+               
+               ui_.port_slider->setValue(msg->PortInput);
+               ui_.port_spinbox->setValue(msg->PortInput);
 
-          ui_.vert_slider->setValue(msg->VertInput);
-          ui_.vert_spinbox->setValue(msg->VertInput);
+               ui_.vert_slider->setValue(msg->VertInput);
+               ui_.vert_spinbox->setValue(msg->VertInput);
 
-          ui_.star_slider->setValue(msg->StarInput);
-          ui_.star_spinbox->setValue(msg->StarInput);
+               ui_.star_slider->setValue(msg->StarInput);
+               ui_.star_spinbox->setValue(msg->StarInput);
+          } else {
+               update_counter_++;
+          }
      }     
 }
 

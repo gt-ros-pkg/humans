@@ -10,6 +10,7 @@
 #include <syllo_common/Orientation.h>
 #include "sensor_msgs/Joy.h"
 #include "videoray/Throttle.h"
+#include "videoray/DesiredTrajectory.h"
 
 #include <sstream>
 
@@ -57,6 +58,13 @@ void callback_joystick(const sensor_msgs::JoyConstPtr& msg)
      joystick_enabled_ = true;
 }
 
+videoray::DesiredTrajectory desired_trajectory_;
+
+void callback_desired_trajectory(const videoray::DesiredTrajectoryConstPtr& msg)
+{
+     desired_trajectory_ = *msg;
+}
+
 int main(int argc, char **argv)
 {     
 
@@ -67,10 +75,11 @@ int main(int argc, char **argv)
      SylloNode syllo_node_;
      syllo_node_.init();    
 
-     ros::Subscriber joystick_sub_ = n_.subscribe<>("/joystick", 1, callback_joystick);
-     ros::Publisher pose_pub_ = n_.advertise<geometry_msgs::PoseStamped>("/pose", 1);     
-     ros::Publisher pose_only_pub_ = n_.advertise<geometry_msgs::Pose>("/pose_only", 1);     
-     ros::Publisher throttle_pub_ = n_.advertise<videoray::Throttle>("/throttle_cmd", 1);
+     ros::Subscriber joystick_sub_ = n_.subscribe<>("joystick", 1, callback_joystick);
+     ros::Subscriber autopilot_sub_ = n_.subscribe<>("desired_trajectory", 1, callback_desired_trajectory);
+     ros::Publisher pose_pub_ = n_.advertise<geometry_msgs::PoseStamped>("pose", 1);     
+     ros::Publisher pose_only_pub_ = n_.advertise<geometry_msgs::Pose>("pose_only", 1);     
+     ros::Publisher throttle_pub_ = n_.advertise<videoray::Throttle>("throttle_cmd", 1);
      
      geometry_msgs::PoseStamped pose_stamped_;
      
@@ -123,6 +132,22 @@ int main(int argc, char **argv)
                     vert_thrust_ = 0;               
                }
 
+          }
+
+          // Handle Auto heading command
+          if (desired_trajectory_.heading_enabled) {
+               comm.set_desired_heading(desired_trajectory_.heading);
+          } else {
+               // Disable auto heading
+               comm.set_desired_heading(-1);
+          }
+          
+          // Handle Auto Depth Command
+          if (desired_trajectory_.depth_enabled) {
+               comm.set_desired_depth(desired_trajectory_.depth);
+          } else {
+               // Disable auto depth
+               comm.set_desired_depth(-1);
           }
 
           status = comm.set_vertical_thruster(vert_thrust_);

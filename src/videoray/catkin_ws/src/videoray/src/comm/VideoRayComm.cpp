@@ -140,7 +140,7 @@ VideoRayComm::~VideoRayComm()
 
 VideoRayComm::Status_t VideoRayComm::set_desired_heading(int heading)
 {
-     if (heading > 360 || heading <= 0) {
+     if (heading > 360 || heading < 0) {
           tx_ctrl_data[AUTO_HEADING_LSB] = 0xFF;
           tx_ctrl_data[AUTO_HEADING_MSB] = 0xFF;
      } else {
@@ -248,7 +248,7 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
           //roll_ = temp;
                     
      } else {
-          printf("Decode Error.\n");
+          printf("Control Command - Decode Error.\n");
      }
      return VideoRayComm::Success;
 }
@@ -321,7 +321,7 @@ VideoRayComm::Status_t VideoRayComm::send_nav_data_command()
           rov_power_ = swap_bytes(packet,  ROV_PWR_MSB, ROV_PWR_LSB);
           
      } else {
-          printf("Decode Error.\n");
+          printf("Nav Data - Decode Error.\n");
      }
      return VideoRayComm::Success;
 }

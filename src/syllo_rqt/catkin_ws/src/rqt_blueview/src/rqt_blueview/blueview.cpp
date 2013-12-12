@@ -99,8 +99,10 @@ namespace rqt_blueview {
 
      void blueview::shutdownPlugin()
      {
-          //subscriber_.shutdown();
-          //publisher_.shutdown();
+          max_range_pub_.shutdown();
+          min_range_pub_.shutdown();
+          enable_log_pub_.shutdown();
+          thresh_pub_.shutdown();
      }
      
      void blueview::saveSettings(qt_gui_cpp::Settings& plugin_settings, qt_gui_cpp::Settings& instance_settings) const

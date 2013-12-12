@@ -150,8 +150,8 @@ Sonar::Status_t Sonar::init()
      printf("BVTHead_GetPingCount: %d\n", pings_);
      
      // Set the range window
-     BVTHead_SetRange(head_, min_range_, max_range_);
-
+     this->set_range(min_range_, max_range_);
+     
      // Build a color mapper
      mapper_ = BVTColorMapper_Create();
      if (mapper_ == NULL) {
@@ -353,6 +353,14 @@ void Sonar::set_range(double min_range, double max_range)
      min_range_ = min_range;
      max_range_ = max_range;
 
+     if (min_range_ < 0 || min_range_ > max_range_ ) {
+          min_range = 0;
+     }
+
+     if (max_range_ < 0 || max_range_ <= min_range_+1) {
+          max_range_ = min_range_ + 2;
+     }
+     
      BVTHead_SetRange(head_, min_range_, max_range_);
 }
 
