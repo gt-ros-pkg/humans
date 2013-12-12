@@ -204,7 +204,6 @@ Sonar::Status_t Sonar::SonarLogEnable(bool enable)
      // Whether enable is true or false, if we enter the function here,
      // we should properly close the current file if currently logging
      if (logging_ && son_logger_) {
-          cout << "closing file" << endl;
           BVTSonar_Destroy(son_logger_);
      }
 
