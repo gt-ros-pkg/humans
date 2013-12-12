@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- <arg name="record_videoray" default="true" /> -->
+
+  <!-- <rosparam file="$(find input)/config/default.yaml"/> -->
+
+  <node pkg="input" name="joystick_1" type="joystick" output="screen">
+    <param name="tick_rate" type="double" value="100" />
+  </node>
+  
+  <!-- <node pkg="rosbag" type="record" name="rosbag_record_videoray" -->
+  <!-- args="-a -o /tmp/videoray-ros-data" -->
+  <!-- if="$(arg record_videoray)" /> -->
+
+</launch>

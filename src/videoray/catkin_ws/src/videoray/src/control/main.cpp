@@ -152,7 +152,7 @@ int main(int argc, char **argv)
           // Populate the orientation
           geometry_msgs::Quaternion quat;
           eulerToQuaternion_xyzw_deg(comm.roll(), comm.pitch(), comm.heading(),
-                                 quat.x, quat.y, quat.z, quat.w);
+                                     quat.x, quat.y, quat.z, quat.w);
           
           pose_stamped_.pose.orientation = quat;
           
