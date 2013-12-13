@@ -1,6 +1,6 @@
 <launch>
-
-  <arg name="record_videoray" default="false" />
+  
+  <arg name="record_videoray" default="true" />
   <arg name="gui_enable" default="true" />
 
   <group ns="videoray">
@@ -19,6 +19,9 @@
       <param name="tick_rate" type="double" value="100" />
     </node>
   
+    <!-- Include Analog Video Camera -->
+    <include file="$(find videoray)/launch/camera.launch" />
+
   </group>
 
   <!-- rosbag - log data node -->
@@ -29,17 +32,13 @@
   <!-- ================ -->
   <!-- Startup the GUIS -->
   <!-- ================ -->
+  <group if="$(arg gui_enable)">
+    
+    <!-- Compass -->
+    <node pkg="rqt_compass" name="rqt_compass" type="rqt_compass" />
 
-  <!-- BlueView Control GUI -->
-  <node pkg="rqt_blueview" name="rqt_blueview" type="rqt_blueview"
-        if="$(arg gui_enable)" />
-
-  <!-- Compass -->
-  <node pkg="rqt_compass" name="rqt_compass" type="rqt_compass"
-        if="$(arg gui_enable)" />
-
-  <!-- Autopilot -->
-  <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot"
-        if="$(arg gui_enable)" />
-
+    <!-- Autopilot -->
+    <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot" />
+  </group>  
+  
 </launch>

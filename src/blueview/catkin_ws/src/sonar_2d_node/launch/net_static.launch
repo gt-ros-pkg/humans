@@ -8,8 +8,6 @@
     <include file="$(find sonar_2d)/launch/net_static.xml" />         
     
     <node pkg="image_view" name="image_view_sonar" type="image_view" args="image:=sonar_image"/>
-
-    <node pkg="rqt_blueview" name="rqt_blueview" type="rqt_blueview" />
     
   </group>
 </launch>

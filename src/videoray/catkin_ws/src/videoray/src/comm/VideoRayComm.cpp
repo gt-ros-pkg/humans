@@ -249,6 +249,9 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
                     
      } else {
           printf("Control Command - Decode Error.\n");
+          printf("Status: %d\n", status);
+          printf("Flushing receiver.\n");
+          serial_.FlushReceiver();
      }
      return VideoRayComm::Success;
 }
@@ -322,6 +325,9 @@ VideoRayComm::Status_t VideoRayComm::send_nav_data_command()
           
      } else {
           printf("Nav Data - Decode Error.\n");
+          printf("Status: %d\n", status);
+          printf("Flushing receiver.\n");
+          serial_.FlushReceiver();
      }
      return VideoRayComm::Success;
 }

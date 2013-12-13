@@ -100,6 +100,11 @@ add_executable(control
   src/comm/VideoRayComm.cpp  
   )
 
+add_executable(camera_NTSC_init
+  src/camera/main.cpp
+  )
+
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(videoray_node videoray_generate_messages_cpp)
@@ -111,6 +116,7 @@ add_dependencies(videoray_control_p videoray_generate_messages_cpp videoray_genc
 add_dependencies(cam_sim videoray_generate_messages_cpp videoray_gencpp)
 
 add_dependencies(control videoray_generate_messages_cpp videoray_gencpp)
+add_dependencies(camera_NTSC_init videoray_generate_messages_cpp videoray_gencpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(videoray_control
@@ -134,6 +140,10 @@ target_link_libraries(videoray_control_p
 )
 
 target_link_libraries(control
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(camera_NTSC_init
   ${catkin_LIBRARIES}
 )
 

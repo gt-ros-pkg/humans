@@ -1,4 +1,12 @@
 <launch>
+
+  <arg name="gui_enable" default="true" />
+
+  <remap from="sonar_max_range" to="rqt_blueview/sonar_max_range" />  
+  <remap from="sonar_min_range" to="rqt_blueview/sonar_min_range" />  
+  <remap from="sonar_thresh" to="rqt_blueview/sonar_thresh" />        
+  <remap from="sonar_enable_log" to="rqt_blueview/sonar_enable_log" />
+
   <node pkg="sonar_2d" name="sonar_2d_image" type="sonar_2d_node" output="screen">
     <param name="tick_rate" type="double" value="10.0" />
     <param name="net_or_file" type="string" value="net" />
@@ -10,4 +18,10 @@
     <param name="color_map" type="string" value="/home/syllogismrxs/repos/sonar-processing/bvtsdk/colormaps/jet.cmap" />
     <param name="save_directory" type="string" value="/home/syllogismrxs/sonar_log" />
   </node>
+
+  <!-- BlueView Control GUI -->
+  <group if="$(arg gui_enable)">
+    <node pkg="rqt_blueview" name="rqt_blueview" type="rqt_blueview" />
+  </group>
+
 </launch>
