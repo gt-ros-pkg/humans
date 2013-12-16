@@ -3,7 +3,11 @@
 
 #define ENABLE_SONAR 1
 
-#include <cv.h>
+#include <opencv/cv.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/contrib/contrib.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 #if ENABLE_SONAR == 1
 #include <bvt_sdk.h>

@@ -1,6 +1,6 @@
 <launch>
   
-  <arg name="record_videoray" default="true" />
+  <arg name="record_videoray" default="false" />
   <arg name="gui_enable" default="true" />
 
   <group ns="videoray">

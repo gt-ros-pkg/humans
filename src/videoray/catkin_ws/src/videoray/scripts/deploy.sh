@@ -7,5 +7,10 @@ v4l2-ctl -s ntsc
 # Ensure that ttyUSB serial ports are writable
 sudo chmod 666 /dev/ttyUSB*
 
-# Launch the VideoRay ROS Package with the BlueView Sonar nodes
-roslaunch videoray deploy_with_sonar.launch
+if [ "$1" == "--enable-sonar" ]; then
+    # Launch the VideoRay ROS Package with the BlueView Sonar nodes
+    roslaunch videoray deploy_with_sonar.launch
+else
+    # Launch the VideoRay ROS Package
+    roslaunch videoray deploy.launch
+fi

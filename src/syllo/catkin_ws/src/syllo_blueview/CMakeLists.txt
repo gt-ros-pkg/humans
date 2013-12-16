@@ -32,6 +32,8 @@ set(BLUEVIEW_SDK_LIBS $ENV{BLUEVIEW_SDK_ROOT}/lib/libbvtsdk.so)
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
+message("=======>")
+message("${OpenCV_INCLUDE_DIRS}")
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
