@@ -64,6 +64,8 @@
   <run_depend>vision_opencv</run_depend>
   <run_depend>syllo_serial</run_depend>
   <run_depend>syllo_common</run_depend>
+  <run_depend>gscam</run_depend>
+  <run_depend>image_view</run_depend>
 
   
   <!-- The export tag contains other, unspecified, tags -->
