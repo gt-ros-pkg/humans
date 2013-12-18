@@ -67,8 +67,26 @@ namespace rqt_rov_status {
 
           ui_.firmware_label->setText("not set");
 
+          // Start GUI update timer
+          timer_ = new QTimer(this);
+          connect(timer_, SIGNAL(timeout()), this, SLOT(updateGUI()));
+          timer_->start(100);
      }
      
+     void rov_status::updateGUI()
+     {
+          ui_.water_temp_spinbox->setValue(status_.water_temp);
+          ui_.tether_voltage_spinbox->setValue(status_.tether_voltage);
+          ui_.voltage_12v_spinbox->setValue(status_.voltage_12V);
+          ui_.current_12v_spinbox->setValue(status_.current_12V);
+          ui_.internal_temp_spinbox->setValue(status_.internal_temp);
+          ui_.humidity_spinbox->setValue(status_.internal_relative_humidity);
+          ui_.comm_err_count_spinbox->setValue(status_.comm_err_count);
+
+          std::ostringstream convert;
+          convert << status_.firmware_version;
+          ui_.firmware_label->setText(convert.str().c_str());
+     }
 
      bool rov_status::eventFilter(QObject* watched, QEvent* event)
      {
@@ -77,6 +95,7 @@ namespace rqt_rov_status {
 
      void rov_status::shutdownPlugin()
      {
+          timer_->stop();
           subscriber_.shutdown();
      }
      
@@ -93,19 +112,8 @@ namespace rqt_rov_status {
      }
      
      void rov_status::callback_status(const videoray::StatusConstPtr& msg)
-     {
-          ui_.water_temp_spinbox->setValue(msg->water_temp);
-          ui_.tether_voltage_spinbox->setValue(msg->tether_voltage);
-          ui_.voltage_12v_spinbox->setValue(msg->voltage_12V);
-          ui_.current_12v_spinbox->setValue(msg->current_12V);
-          ui_.internal_temp_spinbox->setValue(msg->internal_temp);
-          ui_.humidity_spinbox->setValue(msg->internal_relative_humidity);
-          ui_.comm_err_count_spinbox->setValue(msg->comm_err_count);
-
-          std::ostringstream convert;
-          convert << msg->firmware_version;
-          ui_.firmware_label->setText(convert.str().c_str());
-          
+     {          
+          status_ = *msg;
      }     
 }
 

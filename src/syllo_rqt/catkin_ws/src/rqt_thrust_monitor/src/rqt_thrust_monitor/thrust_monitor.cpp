@@ -33,8 +33,6 @@
 #include <ros/master.h>
 
 #include <std_msgs/String.h>
-#include <std_msgs/Int32.h>
-#include <videoray/Throttle.h>
 
 #include <rqt_thrust_monitor/thrust_monitor.h>
 
@@ -64,9 +62,25 @@ namespace rqt_thrust_monitor {
           }
           context.addWidget(widget_);
 
-          update_counter_ = 0;
           this->subscriber_ = getNodeHandle().subscribe<videoray::Throttle>("throttle_cmd", 100, &thrust_monitor::callback_throttle, this);
+
+          // Start GUI update timer
+          timer_ = new QTimer(this);
+          connect(timer_, SIGNAL(timeout()), this, SLOT(updateGUI()));
+          timer_->start(10);
      }     
+
+     void thrust_monitor::updateGUI()
+     {
+          ui_.port_slider->setValue(throttle_.PortInput);
+          ui_.port_spinbox->setValue(throttle_.PortInput);
+
+          ui_.vert_slider->setValue(throttle_.VertInput);
+          ui_.vert_spinbox->setValue(throttle_.VertInput);
+
+          ui_.star_slider->setValue(throttle_.StarInput);
+          ui_.star_spinbox->setValue(throttle_.StarInput);
+     }
 
      bool thrust_monitor::eventFilter(QObject* watched, QEvent* event)
      {
@@ -75,6 +89,7 @@ namespace rqt_thrust_monitor {
 
      void thrust_monitor::shutdownPlugin()
      {
+          timer_->stop();
           subscriber_.shutdown();
      }
      
@@ -91,21 +106,8 @@ namespace rqt_thrust_monitor {
      
      void thrust_monitor::callback_throttle(const videoray::ThrottleConstPtr& msg)
      {
-          if ( update_counter_ > 5) {
-               update_counter_ = 0;
-               
-               ui_.port_slider->setValue(msg->PortInput);
-               ui_.port_spinbox->setValue(msg->PortInput);
-
-               ui_.vert_slider->setValue(msg->VertInput);
-               ui_.vert_spinbox->setValue(msg->VertInput);
-
-               ui_.star_slider->setValue(msg->StarInput);
-               ui_.star_spinbox->setValue(msg->StarInput);
-          } else {
-               update_counter_++;
-          }
-     }     
+          throttle_ = *msg;
+     }
 }
 
 PLUGINLIB_EXPORT_CLASS(rqt_thrust_monitor::thrust_monitor, rqt_gui_cpp::Plugin)

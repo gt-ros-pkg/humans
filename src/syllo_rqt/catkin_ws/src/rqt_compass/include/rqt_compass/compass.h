@@ -38,6 +38,7 @@
 #include <rqt_gui_cpp/plugin.h>
 #include <std_msgs/Int32.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/Quaternion.h>
 
 // Qt headers
 #include <QImage>
@@ -46,6 +47,10 @@
 #include <QString>
 #include <QSize>
 #include <QWidget>
+
+#include <QtGui>
+#include <QResource>
+#include <QSettings>
 
 // Qwt headers
 #include <qwt_compass.h>
@@ -90,7 +95,8 @@ namespace rqt_compass {
 
           virtual void onEnableDesiredHeading(bool checked);          
           virtual void onSetHeading(bool checked);
-          
+          virtual void updateGUI();
+
      protected:
 
           virtual void callback_pose(const geometry_msgs::PoseStampedConstPtr& msg);
@@ -104,6 +110,9 @@ namespace rqt_compass {
 
           QwtSimpleCompassRose *rose_;
           QwtCompassMagnetNeedle *needle_;
+          
+          QTimer *timer_;
+          geometry_msgs::Quaternion orientation_;
      };
 
 }

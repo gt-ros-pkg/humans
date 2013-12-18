@@ -1,0 +1,10 @@
+<launch>
+
+  <node pkg="tests" type="thrust_gui_test" name="thrust_gui_test">
+    <param name="tick_rate" type="double" value="1000.0" />
+  </node>
+
+  <!-- Thrust Monitor -->
+  <node pkg="rqt_thrust_monitor" name="rqt_thrust_monitor" type="rqt_thrust_monitor" output="screen"/>
+
+</launch>

@@ -66,8 +66,7 @@ namespace rqt_compass {
                widget_->setWindowTitle(widget_->windowTitle() + " (" + QString::number(context.serialNumber()) + ")");
           }
           context.addWidget(widget_);
-          
-          
+                   
           rose_ = new QwtSimpleCompassRose( 4, 1 );
           needle_ = new QwtCompassMagnetNeedle();
           ui_.Compass->setRose(rose_);
@@ -75,8 +74,24 @@ namespace rqt_compass {
                     
           // Create subscriber
           this->subscriber_ = getNodeHandle().subscribe<geometry_msgs::PoseStamped>("pose", 1, &compass::callback_pose, this);
+
+          // Start GUI update timer
+          timer_ = new QTimer(this);
+          connect(timer_, SIGNAL(timeout()), this, SLOT(updateGUI()));
+          timer_->start(10);
      }
      
+     void compass::updateGUI()
+     {
+          double roll, pitch, yaw;
+          
+          quaternionToEuler_xyzw_deg(orientation_.x, orientation_.y, 
+                                 orientation_.z, orientation_.w,
+                                 roll, pitch, yaw);
+                    
+          ui_.heading_spinbox->setValue(yaw);
+          ui_.Compass->setValue(yaw);          
+     }
 
      bool compass::eventFilter(QObject* watched, QEvent* event)
      {
@@ -85,6 +100,7 @@ namespace rqt_compass {
 
      void compass::shutdownPlugin()
      {              
+          timer_->stop();
           subscriber_.shutdown();
      }
      
@@ -119,16 +135,8 @@ namespace rqt_compass {
 
      void compass::callback_pose(const geometry_msgs::PoseStampedConstPtr& msg)
      {
-          geometry_msgs::Quaternion orientation = msg->pose.orientation;
-
-          double roll, pitch, yaw;
-          
-          quaternionToEuler_xyzw_deg(orientation.x, orientation.y, 
-                                 orientation.z, orientation.w,
-                                 roll, pitch, yaw);
-
-          ui_.Compass->setValue(yaw);
-          ui_.heading_spinbox->setValue(yaw);
+          orientation_ = msg->pose.orientation;
+          //printf("yaw: %f\n",yaw);
      }     
 }
 

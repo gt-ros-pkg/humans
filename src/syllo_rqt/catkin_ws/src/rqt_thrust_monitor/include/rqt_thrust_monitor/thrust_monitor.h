@@ -47,6 +47,10 @@
 #include <QSize>
 #include <QWidget>
 
+#include <QtGui>
+#include <QResource>
+#include <QSettings>
+
 // Qt widget header
 #include <ui_thrust_monitor.h>
 
@@ -83,6 +87,8 @@ namespace rqt_thrust_monitor {
 
           protected slots:
 
+          virtual void updateGUI();
+
      protected:
 
           virtual void callback_throttle(const videoray::ThrottleConstPtr& msg);
@@ -92,7 +98,9 @@ namespace rqt_thrust_monitor {
           QWidget* widget_;
 
           ros::Subscriber subscriber_;
-          int update_counter_;
+          
+          QTimer *timer_;
+          videoray::Throttle throttle_;
      };
 
 }

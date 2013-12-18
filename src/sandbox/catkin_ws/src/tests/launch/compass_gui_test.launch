@@ -1,0 +1,11 @@
+<launch>
+
+  <node pkg="tests" type="compass_gui_test" name="compass_gui_test">
+    <param name="tick_rate" type="double" value="1000.0" />
+  </node>
+
+
+  <!-- Compass -->
+  <node pkg="rqt_compass" name="rqt_compass" type="rqt_compass" output="screen"/>
+
+</launch>

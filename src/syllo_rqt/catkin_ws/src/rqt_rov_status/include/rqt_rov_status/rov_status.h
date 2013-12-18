@@ -46,6 +46,10 @@
 #include <QSize>
 #include <QWidget>
 
+#include <QtGui>
+#include <QResource>
+#include <QSettings>
+
 // Qt widget header
 #include <ui_rov_status.h>
 
@@ -81,7 +85,8 @@ namespace rqt_rov_status {
      protected:
 
           protected slots:
-
+          
+          virtual void updateGUI();
           
      protected:
 
@@ -92,6 +97,9 @@ namespace rqt_rov_status {
           QWidget* widget_;
 
           ros::Subscriber subscriber_;
+
+          QTimer *timer_;
+          videoray::Status status_;
 
      };
 

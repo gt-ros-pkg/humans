@@ -47,6 +47,12 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="decimals">
+        <number>2</number>
+       </property>
+       <property name="minimum">
+        <double>-720.000000000000000</double>
+       </property>
        <property name="maximum">
         <double>720.000000000000000</double>
        </property>
@@ -74,6 +80,9 @@
      </property>
      <item>
       <widget class="QwtCompass" name="Compass">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
        <property name="lineWidth">
         <number>4</number>
        </property>
