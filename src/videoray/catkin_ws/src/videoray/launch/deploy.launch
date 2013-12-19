@@ -15,6 +15,7 @@
     </node>
    
     <!-- Joystick Control Node -->
+    <param name="joystick_dev" value="/dev/input/js1" />
     <node pkg="input" name="joystick_1" type="joystick" output="screen">
       <param name="tick_rate" type="double" value="100" />
     </node>
@@ -39,6 +40,10 @@
 
     <!-- Autopilot -->
     <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot" />
+
+    <!-- Thrust monitor -->
+    <!-- <node pkg="rqt_thrust_monitor" name="rqt_thrust_monitor" type="rqt_thrust_monitor" /> -->    
+
   </group>  
   
 </launch>

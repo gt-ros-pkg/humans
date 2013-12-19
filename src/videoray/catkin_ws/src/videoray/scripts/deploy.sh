@@ -2,7 +2,7 @@
 
 # Initialize analog camera for NTSC mode.
 # You may need to install v4l-utils for this command...
-v4l2-ctl -s ntsc
+v4l2-ctl -s ntsc --device=1
 
 # Ensure that ttyUSB serial ports are writable
 sudo chmod 666 /dev/ttyUSB*
