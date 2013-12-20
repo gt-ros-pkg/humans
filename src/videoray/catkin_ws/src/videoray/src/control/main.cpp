@@ -4,6 +4,7 @@
 #include "std_msgs/String.h"
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/Quaternion.h>
+#include <geometry_msgs/TwistStamped.h>
 #include "VideoRayComm.h"
 #include <syllo_common/Filter.h>
 #include <syllo_common/SylloNode.h>
@@ -11,6 +12,7 @@
 #include "sensor_msgs/Joy.h"
 #include "videoray/Throttle.h"
 #include "videoray/DesiredTrajectory.h"
+
 
 #include <sstream>
 
@@ -80,9 +82,11 @@ int main(int argc, char **argv)
      ros::Publisher pose_pub_ = n_.advertise<geometry_msgs::PoseStamped>("pose", 1);     
      ros::Publisher pose_only_pub_ = n_.advertise<geometry_msgs::Pose>("pose_only", 1);     
      ros::Publisher throttle_pub_ = n_.advertise<videoray::Throttle>("throttle_cmd", 1);
-     
+     ros::Publisher twist_pub_ = n_.advertise<geometry_msgs::TwistStamped>("accelerations",1);
+
      geometry_msgs::PoseStamped pose_stamped_;
-     
+     geometry_msgs::TwistStamped twist_stamped_;
+
      VideoRayComm::Status_t status;
      VideoRayComm comm;
      
@@ -168,6 +172,7 @@ int main(int argc, char **argv)
 
           // Time stamp the message
           pose_stamped_.header.stamp = ros::Time().now();
+	  twist_stamped_.header.stamp = ros::Time().now();
 
           // Populate x,y,z positions
           pose_stamped_.pose.position.x = 0;
@@ -191,6 +196,18 @@ int main(int argc, char **argv)
           throttle.VertInput = vert_thrust_;
           throttle_pub_.publish(throttle);
 
+	  // Linear accelerations
+	  twist_stamped_.twist.linear.x = comm.surge_accel();
+	  twist_stamped_.twist.linear.y = comm.sway_accel();
+	  twist_stamped_.twist.linear.z = comm.heave_accel();
+
+	  // Angular accelerations
+	  twist_stamped_.twist.angular.x = comm.roll_accel();
+	  twist_stamped_.twist.angular.y = comm.pitch_accel();
+	  twist_stamped_.twist.angular.z = comm.yaw_accel();
+	  
+	  twist_pub_.publish(twist_stamped_);
+
           //cout << "------------------------------------" << endl;
           //cout << "Heading: " << comm.heading() << endl;
           //cout << "Pitch: " << comm.pitch() << endl;
@@ -202,7 +219,7 @@ int main(int argc, char **argv)
           //cout << "Surge Accel: " << comm.surge_accel() << endl;
           //cout << "Sway Accel: " << comm.sway_accel() << endl;
           //cout << "Heave Accel: " << comm.heave_accel() << endl;                    
-          //}
+          //}	  
           
           syllo_node_.spin();
      }

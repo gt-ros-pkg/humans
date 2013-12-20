@@ -1,0 +1,28 @@
+<launch>
+  
+  <!-- The system command "v4l2-ctl -s ntsc" has to be called before 
+       gscam/gstreamer can start. This command was wrapped in a very simple ROS
+       node called "camera_NTSC_init"
+       The linux package v4l-utils is required to run this command.       
+       
+       You MUST run the following command before calling this launch file
+       and after you plug in the USB/DVR analog video converter.
+       
+       $ rosrun videoray init.sh
+       
+       Old way...       
+       <node pkg="videoray" type="camera_NTSC_init" name="camera_NTSC_init" output="screen"/>
+  -->
+
+
+  <!-- Setup and Stream Analog Video Camera with GSCAM-->
+  <arg name="cam_name" value="videoray_cam" />
+  <env name="GSCAM_CONFIG" value="v4l2src device=/dev/video2 ! video/x-raw-rgb,framerate=30/1  ! ffmpegcolorspace" />
+  <node pkg="gscam" type="gscam" name="$(arg cam_name)" > 
+    <param name="camera_name" value="$(arg cam_name)" />
+  </node>
+
+  <!-- Display Camera Video feed -->
+  <node pkg="image_view" name="image_view_videoray" type="image_view" args="image:=camera/image_raw"/>
+
+</launch>

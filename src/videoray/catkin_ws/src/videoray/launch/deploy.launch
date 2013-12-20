@@ -26,9 +26,33 @@
   </group>
 
   <!-- rosbag - log data node -->
-  <node pkg="rosbag" type="record" name="rosbag_record_videoray"
+  <!-- <node pkg="rosbag" type="record" name="rosbag_record_videoray"
         args="-a -o /tmp/videoray-ros-data"
-        if="$(arg record_videoray)" />
+        if="$(arg record_videoray)" /> -->
+
+  <node pkg="rosbag" type="record" name="rosbag_record_videoray"
+        args="-b 0 /pose_only /rosout /rosout_agg /rqt_autopilot/desired_trajectory /rqt_compass/pose /rqt_thrust_monitor/throttle_cmd /videoray/accelerations /videoray/camera/image_raw /videoray/joystick /videoray/rqt_blueview/sonar_enable_log /videoray/rqt_blueview/sonar_max_range /videoray/rqt_blueview/sonar_min_range /videoray/rqt_blueview/sonar_thresh /videoray/sonar_image -o /tmp/videoray-ros-data" if="$(arg record_videoray)" />
+
+ 
+<!--
+
+rosbag record -b 0 -b 0 /pose_ly /rosout /rosout_agg /rqt_autopilot/desired_trajectory /rqt_compass/pose /rqt_thrust_monitor/throttle_cmd /videoray/accelerations /videoray/camera/image_raw /videoray/joystick /videoray/rqt_blueview/sonar_enable_log /videoray/rqt_blueview/sonar_max_range /videoray/rqt_blueview/sonar_min_range /videoray/rqt_blueview/sonar_thresh /videoray/sonar_image
+ 
+/pose_only
+/rosout
+/rosout_agg
+/rqt_autopilot/desired_trajectory
+/rqt_compass/pose
+/rqt_thrust_monitor/throttle_cmd
+/videoray/accelerations
+/videoray/camera/image_raw
+/videoray/joystick
+/videoray/rqt_blueview/sonar_enable_log
+/videoray/rqt_blueview/sonar_max_range
+/videoray/rqt_blueview/sonar_min_range
+/videoray/rqt_blueview/sonar_thresh
+/videoray/sonar_image
+-->
 
   <!-- ================ -->
   <!-- Startup the GUIS -->
@@ -42,7 +66,7 @@
     <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot" />
 
     <!-- Thrust monitor -->
-    <!-- <node pkg="rqt_thrust_monitor" name="rqt_thrust_monitor" type="rqt_thrust_monitor" /> -->    
+    <!-- <node pkg="rqt_thrust_monitor" name="rqt_thrust_monitor" type="rqt_thrust_monitor" /> -->
 
   </group>  
   

@@ -114,6 +114,12 @@ int main(int argc, char **argv)
 
      // Initialize the sonar
      sonar.init();
+
+     //// Open camera for recording
+     //cv::VideoCapture cap_;
+     //cap_.open(1);
+
+     //record_.open("/home/videoray/sonar_log/video.avi");
      
      //Subscribe to range commands
      ros::Subscriber min_range_sub = nh.subscribe("sonar_min_range", 1, 
@@ -141,10 +147,21 @@ int main(int argc, char **argv)
      // Image sensor message
      sensor_msgs::Image msg;
 
+     cv::Mat temp;
+     sonar.getNextSonarImage(temp);
+
+     cv::VideoWriter record_;
+     record_.open("/home/videoray/sonar_log/video.avi", CV_FOURCC('D','I','V','X'), 10, temp.size(), true);
+
+
      while (ros::ok()) {          
-          cv::Mat img;          
+	  //cv::Mat video;
+	  cv::Mat img;          
           int status = sonar.getNextSonarImage(img);
-                    
+          
+	  //cap_ >> video;
+	  //record_ << video;
+	  	  
           try {
                // convert OpenCV image to ROS message
                cvi.header.stamp = ros::Time::now();
@@ -153,13 +170,16 @@ int main(int argc, char **argv)
                
                // Publish the image
                image_pub.publish(msg);
-
+	  
           } catch (cv_bridge::Exception& e) {
                ROS_ERROR("cv_bridge exception: %s", e.what());
                return -1;
           }
-          //cv::imshow("original", img);
-          //cv::waitKey(1);
+
+	  
+          //cv::imshow("sonar", img);
+	  //cv::imshow("video", video);
+          cv::waitKey(1);
           node.spin();
      }
      node.cleanup();
