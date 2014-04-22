@@ -5,7 +5,10 @@
     <!-- more default parameters can be changed here -->
   </include>
 
+  <group ns="robot_0">
   <!-- Spawn a robot into Gazebo -->
-  <!--<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find g500arm5_description)/urdf/g500arm5.urdf -urdf -x 0 -y 0 -z 5 -model g500arm5" />-->
+  <node name="spawn_urdf_robot_0" pkg="gazebo_ros" type="spawn_model" args="-file $(find g500arm5_description)/urdf/g500arm5.sdf -sdf -robot_namespace robot_0 -x 0 -y 0 -z 5 -model g500arm5" />
+
+  </group>
 
 </launch>

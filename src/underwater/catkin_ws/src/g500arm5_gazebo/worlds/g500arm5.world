@@ -1,6 +1,7 @@
 <sdf version='1.4'>
   <world name='default'>
 
+      <!--
       <include>
          <uri>model://g500arm5_description</uri>
          <name>g500arm5_0</name>
@@ -12,6 +13,7 @@
          <name>g500arm5_1</name>
          <pose>2 2 4 0 0 0</pose>
       </include>
+      -->
 
       <model name='ground_plane'>
       <static>1</static>
