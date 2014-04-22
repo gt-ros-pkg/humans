@@ -2,7 +2,7 @@
 
 # List of catkin packages to build
 # Order can be important
-PACKAGES=("syllo" "input" "videoray" "syllo_rqt" "blueview" "sandbox" "syllo_uwsim")
+PACKAGES=("syllo" "input" "videoray" "syllo_rqt" "blueview" "sandbox" "syllo_uwsim" "underwater")
 
 # Generate setenv.sh file on every build
 ENV_FILE_NAME="./setenv.sh"
@@ -36,6 +36,9 @@ do
 
     popd >& /dev/null
 done
+
+# Add location of Gazebo models
+echo 'export GAZEBO_MODEL_PATH=~/repos/humans/src/underwater/catkin_ws/src:${GAZEBO_MODEL_PATH}' >> ${ENV_FILE}
 
 echo
 echo "=================================================="

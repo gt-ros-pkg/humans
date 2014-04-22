@@ -1,0 +1,52 @@
+<sdf version='1.4'>
+  <model name='girona500'>
+    <link name='base_link'>
+      <pose>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_link_visual'>
+        <pose>0 0 0 1.57 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/GIRONA500/g500.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+  </model>
+</sdf>
+
