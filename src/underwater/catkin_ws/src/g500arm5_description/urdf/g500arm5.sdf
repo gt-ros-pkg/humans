@@ -3,15 +3,15 @@
     <link name='base_link'>
       <pose>0 0 0 0 -0 0</pose>
       <inertial>
-        <pose>0 0 0 0 -0 0</pose>
-        <mass>10</mass>
+        <pose>-0.1 0 -0.1 0 -0 0</pose>
+        <mass>20</mass>
         <inertia>
-          <ixx>0.4</ixx>
+          <ixx>1</ixx>
           <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.4</iyy>
+          <ixz>-0.2</ixz>
+          <iyy>1.2</iyy>
           <iyz>0</iyz>
-          <izz>0.2</izz>
+          <izz>0.6</izz>
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
@@ -31,6 +31,31 @@
           </friction>
         </surface>
       </collision>
+      <collision name='base_link_collision_part0'>
+        <pose>-0.2 0 -0.2 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
       <visual name='base_link_visual'>
         <pose>0 0 0 1.57 -0 0</pose>
         <geometry>
@@ -40,6 +65,21 @@
           </mesh>
         </geometry>
       </visual>
+      <visual name='base_link_visual_part0'>
+        <pose>-0.2 0 -0.2 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part0.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <gravity>0</gravity>
+      
       <velocity_decay>
         <linear>0</linear>
         <angular>0</angular>
@@ -47,6 +87,365 @@
       <self_collide>0</self_collide>
       <gravity>0</gravity>
     </link>
+    <link name='part1'>
+      <pose>-0.2 0 -0.2 0 -0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part1_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part1_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part0_to_part1' type='revolute'>
+      <child>part1</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
+    <link name='part2'>
+      <pose>-0.123 0 -0.33 0 0.209 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part2_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part2_visual'>
+        <pose>0 0 0 0 -0.209 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part1_to_part2' type='revolute'>
+      <child>part2</child>
+      <parent>part1</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
+    <link name='part3'>
+      <pose>0.310145 0 -0.421869 0 0.471 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part3_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part3_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part3.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part2_to_part3' type='revolute'>
+      <child>part3</child>
+      <parent>part2</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
+    <link name='part4_base'>
+      <pose>0.630242 0 -0.498462 0 0.471 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part4_base_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part4_base_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part4_base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part3_to_part4_base' type='revolute'>
+      <child>part4_base</child>
+      <parent>part3</parent>
+      <axis>
+        <xyz>0.891115 0 -0.453778</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
+    <link name='part4_jaw1'>
+      <pose>0.710771 0 -0.494582 0 0.471 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part4_jaw1_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part4_jaw1_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part4_jaw1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part4_to_part4_jaw1' type='revolute'>
+      <child>part4_jaw1</child>
+      <parent>part4_base</parent>
+      <axis>
+        <xyz>0 -1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
+    <link name='part4_jaw2'>
+      <pose>0.674469 0 -0.565871 0 0.471 0</pose>
+      <inertial>
+        <pose>0 0 0 0 -0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0.4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.4</iyy>
+          <iyz>0</iyz>
+          <izz>0.2</izz>
+        </inertia>
+      </inertial>
+      <collision name='part4_jaw2_collision'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.6</length>
+            <radius>0.2</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='part4_jaw2_visual'>
+        <pose>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://g500arm5_description/meshes/ARM5E/ARM5E_part4_jaw2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <velocity_decay>
+        <linear>0</linear>
+        <angular>0</angular>
+      </velocity_decay>
+      <self_collide>0</self_collide>
+      <gravity>0</gravity>
+    </link>
+    <joint name='part4_to_part4_jaw2' type='revolute'>
+      <child>part4_jaw2</child>
+      <parent>part4_base</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics/>
+      </axis>
+    </joint>
   </model>
 </sdf>
-

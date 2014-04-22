@@ -1,11 +1,19 @@
 <sdf version='1.4'>
   <world name='default'>
-    <include>
-        <uri>model://g500arm5_description</uri>
-        <name>g500arm5_0</name>
-        <pose>5 5 5 0 0 0</pose>
-    </include>
-    <model name='ground_plane'>
+
+      <include>
+         <uri>model://g500arm5_description</uri>
+         <name>g500arm5_0</name>
+         <pose>0 0 5 0 0 0</pose>
+      </include>
+
+      <include>
+         <uri>model://g500arm5_description</uri>
+         <name>g500arm5_1</name>
+         <pose>2 2 4 0 0 0</pose>
+      </include>
+
+      <model name='ground_plane'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -78,9 +86,9 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>436 677000000</sim_time>
-      <real_time>70 800158910</real_time>
-      <wall_time>1398194117 269805751</wall_time>
+      <sim_time>457 201000000</sim_time>
+      <real_time>20 653341325</real_time>
+      <wall_time>1398199554 990398993</wall_time>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <link name='link'>
@@ -93,7 +101,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>83.7422 -60.0689 23.7131 0 0.275643 2.35619</pose>
+        <pose>6.02374 -6.5529 7.22752 0 0.363643 2.23619</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>

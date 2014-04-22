@@ -1,8 +1,15 @@
 #!/bin/bash
 
+# Due to a bug with the gzsdf converter, which doesn't let us set the model's gravity to zero,
+# we have to manually generate the sdf file and then remove the bad gravity tags.
+
 URDF=$(readlink -f `rospack find g500arm5_description`/urdf/g500arm5.urdf)
 SDF=$(readlink -f `rospack find g500arm5_description`/urdf/g500arm5.sdf)
 
-#cat $(gzsdf 
+# Convert from URDF to SDF
+gzsdf print $URDF > $SDF
 
-#roslaunch g500arm5_gazebo g500arm5.launch
+# Delete all occurances of <gravity>1</gravity>
+sed -i 's,<gravity>1</gravity>,,g' $SDF
+
+roslaunch g500arm5_gazebo g500arm5.launch
