@@ -1,0 +1,12 @@
+<library path="lib/librqt_experiment_notes">
+  <class name="rqt_experiment_notes/experiment_notes" type="rqt_experiment_notes::experiment_notes" base_class_type="rqt_gui_cpp::Plugin">
+    <description>
+      A GUI plugin.
+    </description>
+    <qtgui>
+      <label>experiment_notes</label>
+      <icon type="theme">image-x-generic</icon>
+      <statustip>A GUI plugin.</statustip>
+    </qtgui>
+  </class>
+</library>

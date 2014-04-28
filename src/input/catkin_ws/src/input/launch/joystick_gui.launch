@@ -1,7 +1,7 @@
 <launch>
 
   
-  <param name="joystick_dev" value="/dev/input/js1" />
+  <param name="joystick_dev" value="/dev/input/js2" />
   <!-- <remap from="joystick" to="/rqt_thrust_monitor/throttle_cmd" />-->
   <node pkg="input" name="joystick_1" type="joystick" output="screen">
     <param name="tick_rate" type="double" value="100" />

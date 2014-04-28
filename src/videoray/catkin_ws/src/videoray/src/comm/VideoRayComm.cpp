@@ -15,8 +15,8 @@
 #define LIGHTS_LSB       6
 #define CAM_TILT         7
 #define CAM_FOCUS        8
-#define UNKNOWN_0        9
-#define UNKNOWN_1        10
+#define UNKNOWN_0        9  // some sort of camera control and camera menu 
+#define UNKNOWN_1        10 // selection
 #define AUTO_DEPTH_LSB   11
 #define AUTO_DEPTH_MSB   12
 #define AUTO_HEADING_LSB 13
@@ -90,12 +90,32 @@
 #define RAW_MAG_Z_MSB  26
 #define ATTITUDE_LSB   27
 #define ATTITUDE_MSB   28
-#define HUMIDITY_LSB   29
-#define HUMIDITY_MSB   30
-#define WATER_TEMP_LSB 31
-#define WATER_TEMP_MSB 32
+//#define HUMIDITY_LSB   29
+//#define HUMIDITY_MSB   30
+//#define WATER_TEMP_LSB 31
+//#define WATER_TEMP_MSB 32
+//#define ROV_PWR_LSB    33
+//#define ROV_PWR_MSB    34
+
+#define WATER_TEMP_LSB      00
+#define WATER_TEMP_MSB      01
+#define TETHER_VOLT_LSB     02
+#define TETHER_VOLT_MSB     03
+#define VOLTAGE_12V_LSB     04
+#define VOLTAGE_12V_MSB     05
+#define CURRENT_12V_LSB     06
+#define CURRENT_12V_MSB     07
+#define INTERNAL_TEMP_LSB   08
+#define INTERNAL_TEMP_MSB   09
+#define HUMIDITY_LSB        10 
+#define HUMIDITY_MSB        11
+#define COMM_ERR_COUNT_LSB  12
+#define COMM_ERR_COUNT_MSB  13
+
+
 #define ROV_PWR_LSB    33
 #define ROV_PWR_MSB    34
+
 
 using std::cout;
 using std::endl;
@@ -121,8 +141,8 @@ VideoRayComm::VideoRayComm()
      tx_ctrl_data[LIGHTS_LSB] = 0;
      tx_ctrl_data[CAM_TILT] = 0;
      tx_ctrl_data[CAM_FOCUS] = 0;
-     tx_ctrl_data[UNKNOWN_0] = 0;
-     tx_ctrl_data[UNKNOWN_1] = 0;
+     tx_ctrl_data[UNKNOWN_0] = 0x0;
+     tx_ctrl_data[UNKNOWN_1] = 0x0;
      tx_ctrl_data[AUTO_DEPTH_LSB] = 0xFF;
      tx_ctrl_data[AUTO_DEPTH_MSB] = 0xFF;
      tx_ctrl_data[AUTO_HEADING_LSB] = 0xFF;
@@ -131,12 +151,123 @@ VideoRayComm::VideoRayComm()
      heading_ = 0;
      pitch_ = 0;
      roll_ = 0;
+
+     manip_state_ = VideoRayComm::Idle;
 }
 
 VideoRayComm::~VideoRayComm()
 {
      serial_.Close();
 }
+
+// Hard coded definitions for manipulator command
+char open_manip_data[] = {0x35,0x49,0x0,0x0,0x0,0x0,0x3,0x0};
+char close_manip_data[] = {0x35,0x49,0x0,0x0,0x0,0x0,0x2,0x0};
+char idle_manip_data[] = {0x35,0x49,0x0,0x0,0x0,0x0,0x0,0x0};
+VideoRayComm::Status_t VideoRayComm::set_manipulator_state(VideoRayComm::ManipState_t state)
+{
+     // If the manipulator is already set to the correct state,
+     // return successfully.
+     if (manip_state_ == state ) {
+          return VideoRayComm::Success;
+     }
+     
+     manip_state_ = state;
+     
+     char * packet;
+     int bytes;
+
+     // Generate Packet and grab reference to it
+     packetizer_.set_network_id(0x42);
+     packetizer_.set_flags(0x00);
+     packetizer_.set_csr_addr(0xF0);          
+
+     if (manip_state_ == VideoRayComm::Opening) {
+          packetizer_.set_data(open_manip_data, MANIP_CTRL_SIZE);
+     } else if (manip_state_ == VideoRayComm::Closing) {
+          packetizer_.set_data(close_manip_data, MANIP_CTRL_SIZE);
+     } else {
+          packetizer_.set_data(idle_manip_data, MANIP_CTRL_SIZE);
+     }
+
+     bytes = packetizer_.generate_packet(&packet);    
+
+     //for(int i = 0; i < bytes; i++) {
+     //     printf("%02X ",(unsigned char)packet[i]);
+     //}
+     //printf("\n");
+     
+     // Send the Tx Control packet over the serial line
+     serial_.Write((const void *)packet, bytes);     
+
+     return VideoRayComm::Success;
+}
+
+#define CAM_CTRL_SIZE 2
+char enable_cam_menu[] =  {0xCA, 0x01};
+char arrow_right_data[] = {0xCA, 0x10};
+char arrow_left_data[] = {0xCA, 0x08};
+char arrow_down_data[] = {0xCA, 0x04};
+char arrow_up_data[] = {0xCA, 0x02};
+
+VideoRayComm::Status_t VideoRayComm::set_cam_cmd(VideoRayComm::CamCtrl_t cam_ctrl)
+{
+     char * packet;
+     int bytes;
+
+     // Generate Packet and grab reference to it
+     packetizer_.set_network_id(0x01);
+     packetizer_.set_flags(0x01);
+     packetizer_.set_csr_addr(0xF0);          
+
+     if (cam_ctrl == VideoRayComm::Arrow_Up) {
+          packetizer_.set_data(arrow_up_data, CAM_CTRL_SIZE);
+     } else if (cam_ctrl == VideoRayComm::Arrow_Right) {
+          packetizer_.set_data(arrow_right_data, CAM_CTRL_SIZE);
+     } else if (cam_ctrl == VideoRayComm::Arrow_Down) {
+          packetizer_.set_data(arrow_down_data, CAM_CTRL_SIZE);
+     } else if (cam_ctrl == VideoRayComm::Arrow_Left) {
+          packetizer_.set_data(arrow_left_data, CAM_CTRL_SIZE);
+     } else if (cam_ctrl == VideoRayComm::Enable) {
+          packetizer_.set_data(enable_cam_menu, CAM_CTRL_SIZE);
+     } 
+
+     bytes = packetizer_.generate_packet(&packet);    
+
+     //for(int i = 0; i < bytes; i++) {
+     //     printf("%02X ",(unsigned char)packet[i]);
+     //}
+     //printf("\n");
+
+     // Send the Tx Control packet over the serial line
+     serial_.Write((const void *)packet, bytes);     
+
+     char byte;
+     Packetizer::Status_t status;
+     do {
+          if (serial_.ReadChar(&byte,0) == 1) {
+               status = receiver_.receive_packet(byte);
+          } else {
+               // Did not receive a byte, break out.
+               printf("Error reading byte.\n");
+               break;
+          }          
+     } while(status == Packetizer::In_Progress);
+     
+     if (status == Packetizer::Success) {
+          bytes = receiver_.get_payload(&packet);          
+          //for (int x = 0 ; x < bytes ; x++) {
+          //     printf("%x ", (unsigned char)packet[x]);
+          //}
+          //printf("\n");                              
+     } else {
+          printf("Cam Control - Decode Error.\n");
+          printf("Status: %d\n", status);
+          printf("Flushing receiver.\n");
+          serial_.FlushReceiver();
+     }
+
+     return VideoRayComm::Success;}
 
 VideoRayComm::Status_t VideoRayComm::set_desired_heading(int heading)
 {
@@ -208,6 +339,7 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
      int bytes;
 
      // Generate Packet and grab reference to it
+     packetizer_.set_network_id(0x01);
      packetizer_.set_flags(0x03);
      packetizer_.set_csr_addr(0x00);          
      packetizer_.set_data(tx_ctrl_data, TX_CTRL_SIZE);
@@ -278,6 +410,7 @@ VideoRayComm::Status_t VideoRayComm::send_nav_data_command()
      //packetizer_.set_data(tx_ctrl_data, 0);
      
      // Navigation data vendor specific message...
+     packetizer_.set_network_id(0x01);
      packetizer_.set_flags(0x5);
      packetizer_.set_csr_addr(0x0);          
      packetizer_.set_data(tx_ctrl_data, 0);
@@ -320,11 +453,57 @@ VideoRayComm::Status_t VideoRayComm::send_nav_data_command()
           surge_accel_ = swap_bytes(packet, SURGE_ACC_MSB, SURGE_ACC_LSB) / 1000.0;
           sway_accel_ = swap_bytes(packet, SWAY_ACC_MSB, SWAY_ACC_LSB) / 1000.0;          
           heave_accel_ = swap_bytes(packet, HEAVE_ACC_MSB, HEAVE_ACC_LSB) / 1000.0;          
-
-          rov_power_ = swap_bytes(packet,  ROV_PWR_MSB, ROV_PWR_LSB);
           
      } else {
           printf("Nav Data - Decode Error.\n");
+          printf("Status: %d\n", status);
+          printf("Flushing receiver.\n");
+          serial_.FlushReceiver();
+     }
+     return VideoRayComm::Success;
+}
+
+VideoRayComm::Status_t VideoRayComm::request_status()
+{
+     char * packet;
+     int bytes;
+
+     packetizer_.set_network_id(0x01);
+     packetizer_.set_flags(0x8E);
+     packetizer_.set_csr_addr(0x7A);
+     packetizer_.set_data(tx_ctrl_data, 0);
+
+     bytes = packetizer_.generate_packet(&packet);
+     
+     // Send the Tx Control packet over the serial line
+     serial_.Write((const void *)packet, bytes);
+     
+     char byte;
+     Packetizer::Status_t status;
+     do {
+          if (serial_.ReadChar(&byte,0) == 1) {
+               status = receiver_.receive_packet(byte);
+          } else {
+               // Did not receive a byte, break out.
+               printf("Error reading byte.\n");
+               break;
+          }          
+     } while(status == Packetizer::In_Progress);
+     
+     if (status == Packetizer::Success) {
+          bytes = receiver_.get_payload(&packet);
+          
+          //for (int x = 0 ; x < bytes ; x++) {
+          //     printf("%x ", (unsigned char)packet[x]);
+          //}
+          //printf("\n");
+                   
+          rov_voltage_ = swap_bytes(packet,  VOLTAGE_12V_MSB, VOLTAGE_12V_LSB);
+          water_temperature_ = swap_bytes(packet, WATER_TEMP_MSB, WATER_TEMP_LSB);
+          humidity_ = swap_bytes(packet, HUMIDITY_MSB, HUMIDITY_LSB);
+          
+     } else {
+          printf("ROV Status - Decode Error.\n");
           printf("Status: %d\n", status);
           printf("Flushing receiver.\n");
           serial_.FlushReceiver();
@@ -342,7 +521,6 @@ double VideoRayComm::depth()
      return depth_;
 }
 
-
 double VideoRayComm::roll()
 {
      return roll_;
@@ -353,9 +531,19 @@ double VideoRayComm::pitch()
      return pitch_;
 }
 
+double VideoRayComm::rov_voltage()
+{
+     return rov_voltage_;
+}
+
 double VideoRayComm::water_temperature()
 {
      return water_temperature_;
+}
+
+double VideoRayComm::humidity()
+{
+     return humidity_;
 }
 
 double VideoRayComm::internal_temperature()

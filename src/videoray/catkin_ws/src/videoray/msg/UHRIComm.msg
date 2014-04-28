@@ -1,0 +1,7 @@
+int32 NONE=0
+int32 ACK=1
+int32 NACK=2
+int32 ATTENTION=3
+int32 TASK_COMPLETE=4
+
+int32 Msg2Diver

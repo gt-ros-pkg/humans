@@ -51,6 +51,8 @@ public:
      void set_save_directory(const std::string &save_directory);
 
      Status_t SonarLogEnable(bool enable);
+     const std::string& current_sonar_file();
+
 
      int height();
      int width();

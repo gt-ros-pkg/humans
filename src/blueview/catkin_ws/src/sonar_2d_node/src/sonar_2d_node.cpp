@@ -3,22 +3,30 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 #include <syllo_common/SylloNode.h>
 #include <syllo_blueview/Sonar.h>
+#include <syllo_common/Utils.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <image_transport/image_transport.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/Image.h>
+
 #include <sensor_msgs/image_encodings.h>
 
 #include <std_msgs/Float32.h>
 #include <std_msgs/Bool.h>
 
 #include <boost/filesystem.hpp>
+
+#include <videoray/Notes.h>
 
 using std::cout;
 using std::endl;
@@ -36,15 +44,60 @@ void MaxRangeCallback(const std_msgs::Float32::ConstPtr& msg)
      sonar.set_max_range(msg->data);
 }
 
+//// Open camera for recording
+cv::VideoWriter record_;
+bool record_initialized_ = false;
+std::string video_filename_ = "";
+bool logging_enabled_ = false;
+cv_bridge::CvImagePtr cv_img_ptr_;
+bool cv_ptr_valid_ = false;
+
+std::string notes_filename_ = "";
+std::fstream notes_file_;
+std::string log_filename_ = "";
+std::fstream log_file_;
+int log_frame_num_ = 0;
+
+void videoCallback(const sensor_msgs::ImageConstPtr &msg)
+{
+     cv_img_ptr_ = cv_bridge::toCvCopy(msg, "bgr8");      
+     cv_ptr_valid_ = true;
+}
+
+void notesCallback(const videoray::NotesConstPtr &msg)
+{     
+     if (!notes_file_.is_open()) {
+          notes_file_.open(notes_filename_.c_str());
+     }
+     notes_file_ << "-------------------------------------------" << endl;
+     notes_file_ << "Time: " << msg->header.stamp.sec << " " ;
+     notes_file_ << msg->header.stamp.nsec << endl;
+     notes_file_ << msg->notes << endl;
+}
+
 void EnableSonarLoggingCallback(const std_msgs::Bool::ConstPtr& msg)
 {
+     logging_enabled_ = msg->data;
+
      sonar.SonarLogEnable(msg->data);
+     if (logging_enabled_) {
+          // Generate the avi file name          
+          video_filename_ = sonar.current_sonar_file() + ".avi";              
+          log_filename_ = sonar.current_sonar_file() + ".txt";          
+          notes_filename_ = sonar.current_sonar_file() + ".notes";
+          log_frame_num_ = 0;
+     } else {
+          log_file_.close();
+          notes_file_.close();
+     }
+     
+     record_initialized_ = false;     
 }
 
 int main(int argc, char **argv)
 {              
-     ros::init(argc, argv, "sonar_2d_node");
-     ros::NodeHandle nh;
+     ros::init(argc, argv, "sonar_2d_node");     
+     ros::NodeHandle nh_;
      
      SylloNode node;
      node.init();          
@@ -80,7 +133,9 @@ int main(int argc, char **argv)
      // Grab sonar save directory
      std::string save_directory;
      node.get_param("~save_directory", save_directory);
-     sonar.set_save_directory(save_directory);
+     sonar.set_save_directory(save_directory);     
+
+     notes_filename_ = save_directory + "/" + syllo::get_time_string() + ".notes";
 
      // Create the save_directory if it doesn't exist
      boost::filesystem::path dir(save_directory);
@@ -114,28 +169,24 @@ int main(int argc, char **argv)
 
      // Initialize the sonar
      sonar.init();
-
-     //// Open camera for recording
-     //cv::VideoCapture cap_;
-     //cap_.open(1);
-
-     //record_.open("/home/videoray/sonar_log/video.avi");
      
      //Subscribe to range commands
-     ros::Subscriber min_range_sub = nh.subscribe("sonar_min_range", 1, 
+     ros::Subscriber min_range_sub = nh_.subscribe("sonar_min_range", 1, 
                                                  MinRangeCallback);
-     ros::Subscriber max_range_sub = nh.subscribe("sonar_max_range", 1, 
+     ros::Subscriber max_range_sub = nh_.subscribe("sonar_max_range", 1, 
                                                  MaxRangeCallback);
 
-     ros::Subscriber enable_log_sub = nh.subscribe("sonar_enable_log", 1, 
+     ros::Subscriber enable_log_sub = nh_.subscribe("sonar_enable_log", 1, 
                                                    EnableSonarLoggingCallback);
 
-
+     ros::Subscriber video_sub = nh_.subscribe("/videoray/camera/image_raw", 1, videoCallback);
+     ros::Subscriber notes_sub = nh_.subscribe("/rqt_experiment_notes/experiment_notes", 1, notesCallback);
+     //record_.open("/home/syllogismrxs/sonar_log/video.avi");         
      
      //Subscribe to log sonar file commands
 
      //Publish opencv image of sonar
-     image_transport::ImageTransport it(nh);
+     image_transport::ImageTransport it(nh_);
      image_transport::Publisher image_pub;
      image_pub = it.advertise("sonar_image", 1);
           
@@ -150,36 +201,63 @@ int main(int argc, char **argv)
      cv::Mat temp;
      sonar.getNextSonarImage(temp);
 
-     cv::VideoWriter record_;
-     record_.open("/home/videoray/sonar_log/video.avi", CV_FOURCC('D','I','V','X'), 10, temp.size(), true);
+     //cv::VideoWriter record_;
+     //record_.open("/home/videoray/sonar_log/video.avi", CV_FOURCC('D','I','V','X'), 10, temp.size(), true);
 
-
+     ros::Time ros_time;
+     
      while (ros::ok()) {          
-	  //cv::Mat video;
-	  cv::Mat img;          
+          cv::Mat img;          
           int status = sonar.getNextSonarImage(img);
-          
+      
+          // Handle video logging
+          if (logging_enabled_ && cv_ptr_valid_) {
+               if (!record_initialized_) {
+                    //record_.open(video_filename_,CV_FOURCC('M','J','P','G'),30,cv_img_ptr_->image.size(), true);
+                    record_.open(video_filename_,CV_FOURCC('D','I','V','X'),15,cv_img_ptr_->image.size(), true);
+                    record_initialized_ = true;
+                    log_file_.open(log_filename_.c_str(), std::ios::out);
+                    if (notes_file_.is_open()) {
+                         notes_file_.close();
+                    }
+                    notes_file_.open(notes_filename_.c_str(), std::ios::out);
+               }
+               record_ << cv_img_ptr_->image;
+
+               std::ostringstream frame_num_ss, time_sec_ss, time_nsec_ss;
+               frame_num_ss << log_frame_num_++;
+               ros_time = ros::Time::now();
+               time_sec_ss << ros_time.sec;
+               time_nsec_ss << ros_time.nsec;
+               
+               // frame number, time (sec), time (nsec)
+               log_file_ << frame_num_ss.str() << "," << time_sec_ss.str()
+                         << "," << time_nsec_ss.str() << endl;
+          }
+
 	  //cap_ >> video;
 	  //record_ << video;
-	  	  
-          try {
-               // convert OpenCV image to ROS message
-               cvi.header.stamp = ros::Time::now();
-               cvi.image = img;
-               cvi.toImageMsg(msg);
+	 
+          if (status == Sonar::Success) {
+               try {
+                    // convert OpenCV image to ROS message
+                    cvi.header.stamp = ros::Time::now();
+                    cvi.image = img;
+                    cvi.toImageMsg(msg);
                
-               // Publish the image
-               image_pub.publish(msg);
+                    // Publish the image
+                    image_pub.publish(msg);
 	  
-          } catch (cv_bridge::Exception& e) {
-               ROS_ERROR("cv_bridge exception: %s", e.what());
-               return -1;
+               } catch (cv_bridge::Exception& e) {
+                    ROS_ERROR("cv_bridge exception: %s", e.what());
+                    return -1;
+               }
           }
 
 	  
           //cv::imshow("sonar", img);
 	  //cv::imshow("video", video);
-          cv::waitKey(1);
+          //cv::waitKey(1);
           node.spin();
      }
      node.cleanup();

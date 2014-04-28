@@ -39,6 +39,8 @@ add_message_files(
   DesiredTrajectory.msg
   AccessoryControl.msg
   Status.msg
+  UHRIComm.msg
+  Notes.msg
   )
 
 ## Generate services in the 'srv' folder

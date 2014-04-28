@@ -102,12 +102,24 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+         <property name="minimum">
+          <double>-999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>999999.000000000000000</double>
+         </property>
         </widget>
        </item>
        <item row="3" column="1">
         <widget class="QDoubleSpinBox" name="tether_voltage_spinbox">
          <property name="readOnly">
           <bool>true</bool>
+         </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -116,12 +128,24 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
+         </property>
         </widget>
        </item>
        <item row="5" column="1">
         <widget class="QDoubleSpinBox" name="current_12v_spinbox">
          <property name="readOnly">
           <bool>true</bool>
+         </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -130,6 +154,12 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
+         </property>
         </widget>
        </item>
        <item row="7" column="1">
@@ -137,12 +167,24 @@
          <property name="readOnly">
           <bool>true</bool>
          </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
+         </property>
         </widget>
        </item>
        <item row="8" column="1">
         <widget class="QDoubleSpinBox" name="comm_err_count_spinbox">
          <property name="readOnly">
           <bool>true</bool>
+         </property>
+         <property name="minimum">
+          <double>-9999999.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>9999999.000000000000000</double>
          </property>
         </widget>
        </item>

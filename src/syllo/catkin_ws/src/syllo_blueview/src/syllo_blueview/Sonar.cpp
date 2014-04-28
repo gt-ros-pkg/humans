@@ -383,3 +383,8 @@ void Sonar::set_save_directory(const std::string &save_directory)
 {
      save_directory_ = save_directory;
 }
+
+const std::string& Sonar::current_sonar_file()
+{
+     return cur_log_file_;
+}

@@ -15,8 +15,8 @@
     <param name="min_dist" type="double" value="0.0" />
     <param name="max_dist" type="double" value="10.0" />
     <param name="mode" type="string" value="image" />
-    <param name="color_map" type="string" value="/home/videoray/sonar-processing/bvtsdk/colormaps/jet.cmap" />
-    <param name="save_directory" type="string" value="/home/videoray/sonar_log" />
+    <param name="color_map" type="string" value="/home/syllogismrxs/repos/sonar-processing/bvtsdk/colormaps/jet.cmap" />
+    <param name="save_directory" type="string" value="/home/syllogismrxs/sonar_log" />
   </node>
 
   <!-- BlueView Control GUI -->

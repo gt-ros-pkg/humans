@@ -10,12 +10,17 @@
     <remap from="pose_only" to="/pose_only" />
     <remap from="throttle_cmd" to="/rqt_thrust_monitor/throttle_cmd" />
     <remap from="desired_trajectory" to="/rqt_autopilot/desired_trajectory" />
+    <remap from="sonar_enable_log" to="rqt_blueview/sonar_enable_log" />
+    <remap from="videoray_status" to="/rqt_rov_status/videoray_status" />
+    <remap from="uhri_comm" to="/rqt_uhri/uhri_comm" />
+    <remap from="experiment_notes" to="/rqt_experiment_notes/experiment_notes" />
     <node pkg="videoray" name="videoray_control" type="control" output="screen">
       <param name="tick_rate" type="double" value="50" />
+      <param name="save_directory" type="string" value="/home/syllogismrxs/sonar_log" />
     </node>
    
     <!-- Joystick Control Node -->
-    <param name="joystick_dev" value="/dev/input/js1" />
+    <param name="joystick_dev" value="/dev/input/js2" />
     <node pkg="input" name="joystick_1" type="joystick" output="screen">
       <param name="tick_rate" type="double" value="100" />
     </node>
@@ -65,6 +70,15 @@ rosbag record -b 0 -b 0 /pose_ly /rosout /rosout_agg /rqt_autopilot/desired_traj
     <!-- Autopilot -->
     <node pkg="rqt_autopilot" name="rqt_autopilot" type="rqt_autopilot" />
 
+    <!-- ROV Status-->
+    <!--<node pkg="rqt_rov_status" name="rqt_rov_status" type="rqt_rov_status" />-->
+    
+    <!-- UHRI Comm-->
+    <node pkg="rqt_uhri" name="rqt_uhri" type="rqt_uhri" />
+    
+    <!-- Experimental notes-->
+    <node pkg="rqt_experiment_notes" name="rqt_experiment_notes" type="rqt_experiment_notes" />
+    
     <!-- Thrust monitor -->
     <!-- <node pkg="rqt_thrust_monitor" name="rqt_thrust_monitor" type="rqt_thrust_monitor" /> -->
 
