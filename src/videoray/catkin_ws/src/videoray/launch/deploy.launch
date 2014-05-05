@@ -20,7 +20,7 @@
     </node>
    
     <!-- Joystick Control Node -->
-    <param name="joystick_dev" value="/dev/input/js2" />
+    <param name="joystick_dev" value="/dev/input/js1" />
     <node pkg="input" name="joystick_1" type="joystick" output="screen">
       <param name="tick_rate" type="double" value="100" />
     </node>

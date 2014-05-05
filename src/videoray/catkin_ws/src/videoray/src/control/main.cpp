@@ -30,6 +30,7 @@ bool joystick_enabled_ = false;
 
 void callback_joystick(const sensor_msgs::JoyConstPtr& msg)
 {
+          
      bool update_prev = false;
 
      // Check for change in number of buttons
@@ -151,7 +152,7 @@ int main(int argc, char **argv)
      ros::Publisher enable_log_pub_ = n_.advertise<std_msgs::Bool>("sonar_enable_log",1);
      ros::Publisher videoray_status_pub_ = n_.advertise<videoray::Status>("videoray_status",1);
 
-     geometry_msgs::PoseStamped pose_stamped_;
+     //geometry_msgs::PoseStamped pose_stamped_;
      geometry_msgs::TwistStamped twist_stamped_;
 
      VideoRayComm::Status_t status;
@@ -186,6 +187,7 @@ int main(int argc, char **argv)
      int att_count = 0;
 
      uhri_comm_.Msg2Diver = videoray::UHRIComm::NONE;
+     
 
      ros::Time timer_;
      
@@ -203,10 +205,11 @@ int main(int argc, char **argv)
                     }                    
                }
 
-               //cout << "Vertical: " << axis_[1] << endl;
                vert_thrust_ = invert_sign(normalize(axis_[1], -32767, 32767, -99, 99));
                port_thrust_ = invert_sign(normalize(axis_[3], -32767, 32767, -89, 89));
                star_thrust_ = invert_sign(normalize(axis_[3], -32767, 32767, -89, 89));
+               
+
 
                turn_ = invert_sign(normalize(axis_[2], -32767, 32767, -89, 89));
                port_thrust_ -= turn_;
@@ -415,66 +418,66 @@ int main(int argc, char **argv)
           status = comm.send_control_command();
           if (status != VideoRayComm::Success) {
                cout << "Exec Transfer Error!" << endl;
-          }
+          }                   
                
-          status = comm.send_nav_data_command();
-          if (status != VideoRayComm::Success) {
-               cout << "Exec Transfer Error!" << endl;
-          }
+          //status = comm.send_nav_data_command();
+          //if (status != VideoRayComm::Success) {
+          //     cout << "Exec Transfer Error!" << endl;
+          //}
 
-          status = comm.set_manipulator_state(manip_state_);
-          if (status != VideoRayComm::Success) {
-               cout << "Error: Set Manipulator State" << endl;
-          }          
+          //status = comm.set_manipulator_state(manip_state_);
+          //if (status != VideoRayComm::Success) {
+          //     cout << "Error: Set Manipulator State" << endl;
+          //}          
 
           // Time stamp the message
-          pose_stamped_.header.stamp = ros::Time().now();
-	  twist_stamped_.header.stamp = ros::Time().now();
+          //pose_stamped_.header.stamp = ros::Time().now();
+	  //twist_stamped_.header.stamp = ros::Time().now();
 
-          // Populate x,y,z positions
-          pose_stamped_.pose.position.x = 0;
-          pose_stamped_.pose.position.y = 0;
-          pose_stamped_.pose.position.z = comm.depth();
-                    
-          // Populate the orientation
-          geometry_msgs::Quaternion quat;
-          eulerToQuaternion_xyzw_deg(comm.roll(), comm.pitch(), comm.heading(),
-                                     quat.x, quat.y, quat.z, quat.w);
+          //// Populate x,y,z positions
+          //pose_stamped_.pose.position.x = 0;
+          //pose_stamped_.pose.position.y = 0;
+          //pose_stamped_.pose.position.z = comm.depth();
+          //          
+          //// Populate the orientation
+          //geometry_msgs::Quaternion quat;
+          //eulerToQuaternion_xyzw_deg(comm.roll(), comm.pitch(), comm.heading(),
+          //                           quat.x, quat.y, quat.z, quat.w);
+          //
+          //pose_stamped_.pose.orientation = quat;
+          //
+          //// Publish pose stamped and regular pose for rqt_pose_view
+          //pose_pub_.publish(pose_stamped_);
+          //pose_only_pub_.publish(pose_stamped_.pose);
           
-          pose_stamped_.pose.orientation = quat;
-          
-          // Publish pose stamped and regular pose for rqt_pose_view
-          pose_pub_.publish(pose_stamped_);
-          pose_only_pub_.publish(pose_stamped_.pose);
-          
-          videoray::Throttle throttle;
-          throttle.PortInput = port_thrust_;
-          throttle.StarInput = star_thrust_;
-          throttle.VertInput = vert_thrust_;
-          throttle_pub_.publish(throttle);
+          //videoray::Throttle throttle;
+          //throttle.PortInput = port_thrust_;
+          //throttle.StarInput = star_thrust_;
+          //throttle.VertInput = vert_thrust_;
+          //throttle_pub_.publish(throttle);
 
-	  // Linear accelerations
-	  twist_stamped_.twist.linear.x = comm.surge_accel();
-	  twist_stamped_.twist.linear.y = comm.sway_accel();
-	  twist_stamped_.twist.linear.z = comm.heave_accel();
-
-	  // Angular accelerations
-	  twist_stamped_.twist.angular.x = comm.roll_accel();
-	  twist_stamped_.twist.angular.y = comm.pitch_accel();
-	  twist_stamped_.twist.angular.z = comm.yaw_accel();
-	  
-	  twist_pub_.publish(twist_stamped_);
-
-          status = comm.request_status();
-          if (status != VideoRayComm::Success) {
-               cout << "Exec Transfer Error!" << endl;
-          }
-
-          videoray_status_.internal_relative_humidity = comm.humidity();
-          videoray_status_.water_temp = comm.water_temperature();
-          videoray_status_.voltage_12V = comm.rov_voltage();
-
-          videoray_status_pub_.publish(videoray_status_);
+	  //// Linear accelerations
+	  //twist_stamped_.twist.linear.x = comm.surge_accel();
+	  //twist_stamped_.twist.linear.y = comm.sway_accel();
+	  //twist_stamped_.twist.linear.z = comm.heave_accel();
+          //
+	  //// Angular accelerations
+	  //twist_stamped_.twist.angular.x = comm.roll_accel();
+	  //twist_stamped_.twist.angular.y = comm.pitch_accel();
+	  //twist_stamped_.twist.angular.z = comm.yaw_accel();
+	  //
+	  //twist_pub_.publish(twist_stamped_);
+          //
+          //status = comm.request_status();
+          //if (status != VideoRayComm::Success) {
+          //     cout << "Exec Transfer Error!" << endl;
+          //}
+          //
+          //videoray_status_.internal_relative_humidity = comm.humidity();
+          //videoray_status_.water_temp = comm.water_temperature();
+          //videoray_status_.voltage_12V = comm.rov_voltage();
+          //
+          //videoray_status_pub_.publish(videoray_status_);
 
           //cout << "------------------------------------" << endl;
           //cout << "Heading: " << comm.heading() << endl;

@@ -348,6 +348,7 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
      // Send the Tx Control packet over the serial line
      serial_.Write((const void *)packet, bytes);
      
+     int test = 0;
      char byte;
      Packetizer::Status_t status;
      do {
@@ -357,11 +358,13 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
                // Did not receive a byte, break out.
                printf("Error reading byte.\n");
                break;
-          }          
+          }       
+          test++;
+          if (test > 100) break;
      } while(status == Packetizer::In_Progress);
      
-     if (status == Packetizer::Success) {
-          bytes = receiver_.get_payload(&packet);
+     //if (status == Packetizer::Success) {
+     //     bytes = receiver_.get_payload(&packet);
           
           //for (int x = 0 ; x < bytes ; x++) {
           //     printf("%x ", (unsigned char)packet[x]);
@@ -379,12 +382,13 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
           //temp = ((short)(packet[ROLL_MSB]) << 8) | packet[ROLL_LSB]; 
           //roll_ = temp;
                     
-     } else {
-          printf("Control Command - Decode Error.\n");
-          printf("Status: %d\n", status);
-          printf("Flushing receiver.\n");
-          serial_.FlushReceiver();
-     }
+     //} else {
+     //     printf("Control Command - Decode Error.\n");
+     //     printf("Status: %d\n", status);
+     //     printf("Flushing receiver.\n");
+     //     serial_.FlushReceiver();
+     //}
+     serial_.FlushReceiver();
      return VideoRayComm::Success;
 }
 
