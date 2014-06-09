@@ -4,6 +4,7 @@
 
   <!-- <rosparam file="$(find input)/config/default.yaml"/> -->
 
+  <!-- Use jstest-gtk to calibrate your joystick-->
   <node pkg="input" name="joystick_1" type="joystick" output="screen">
     <param name="tick_rate" type="double" value="100" />
   </node>

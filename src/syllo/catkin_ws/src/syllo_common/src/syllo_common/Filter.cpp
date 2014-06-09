@@ -32,10 +32,10 @@ double normalize(double input, const double &in_min, const double &in_max,
           return 0;
      }
 
-     double ratio = input / (in_max - in_min);
-     return ratio * (out_max - out_min);
-
-     return input;
+     double offset = -in_min;
+     
+     double ratio = (input+offset) / (in_max+offset);
+     return ratio * (out_max - out_min) + out_min;
 }
 
 double norm_degrees(double input)
