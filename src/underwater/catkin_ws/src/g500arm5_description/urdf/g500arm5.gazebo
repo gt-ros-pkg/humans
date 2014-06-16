@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot>
+
+  <gazebo reference="base_link">
+    <turnGravityOff>true</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="part0">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+  <gazebo reference="part1">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+  <gazebo reference="part2">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+  <gazebo reference="part3">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+  <gazebo reference="part4_base">
+    <turnGravityOff>true</turnGravityOff>    
+    <material>Gazebo/Black</material>
+  </gazebo>
+  
+  <gazebo reference="part4_jaw1">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+  <gazebo reference="part4_jaw2">
+    <turnGravityOff>true</turnGravityOff>    
+  </gazebo>
+
+</robot>

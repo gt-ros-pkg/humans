@@ -7,11 +7,14 @@ project(g500arm5_gazebo)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(gazebo REQUIRED)
 
+link_directories(${GAZEBO_LIBRARY_DIRS})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -82,7 +85,9 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES g500arm5_gazebo
 #  CATKIN_DEPENDS roscpp rospy
-#  DEPENDS system_lib
+ DEPENDS
+ roscpp
+ gazebo_ros
 )
 
 ###########
@@ -91,10 +96,21 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+#include_directories(include)
 include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+  ${catkin_INCLUDE_DIRS} 
+  ${GAZEBO_INCLUDE_DIRS}
+  )
+
+#set(GRUVI_PLUGIN_NAME "gruvi_gazebo_ros")
+#
+#add_library(${GRUVI_PLUGIN_NAME} src/gruvi_gazebo_ros.cpp)
+#
+#target_link_libraries(${GRUVI_PLUGIN_NAME}
+#  ${catkin_LIBRARIES} 
+#  ${GAZEBO_LIBRARIES}
+#  )
+
 
 ## Declare a cpp library
 # add_library(g500arm5_gazebo

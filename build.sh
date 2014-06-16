@@ -38,7 +38,7 @@ do
 done
 
 # Add location of Gazebo models
-echo 'export GAZEBO_MODEL_PATH=~/repos/humans/src/underwater/catkin_ws/src:${GAZEBO_MODEL_PATH}' >> ${ENV_FILE}
+#echo 'export GAZEBO_MODEL_PATH=~/repos/humans/src/underwater/catkin_ws/src:${GAZEBO_MODEL_PATH}' >> ${ENV_FILE}
 
 echo
 echo "=================================================="

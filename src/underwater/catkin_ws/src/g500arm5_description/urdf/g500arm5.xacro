@@ -1,31 +1,10 @@
 <?xml version="1.0"?>
-<robot name="girona500">
+<robot name="girona500" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-
-  <gazebo reference="base_link">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part0">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part1">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part2">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part3">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part4_base">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part4_jaw1">
-    <gravity>0</gravity>
-  </gazebo>
-  <gazebo reference="part4_jaw2">
-    <gravity>0</gravity>
-  </gazebo>
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find g500arm5_description)/urdf/g500arm5.gazebo" />
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find g500arm5_description)/urdf/materials.xacro" />
 
   <link name="base_link">
     <visual>
@@ -40,8 +19,10 @@
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="98"/>
+      <inertia ixx="8.0" ixy="0.0" ixz="0.0" 
+                         iyy="8.0" iyz="0.0" 
+                                   izz="8.0"/>
     </inertial>          
   </link>  
 
@@ -54,12 +35,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
 
@@ -78,12 +61,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
 
@@ -103,12 +88,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
 
@@ -119,6 +106,7 @@
     <origin rpy="0 0.209 0" xyz="0.077 0 -0.130"/>
   </joint>
 
+  
   <link name="part3">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -128,12 +116,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"      ixz="0.0"
+                              iyy="6.667e-7" iyz="0.0"
+                                             izz="6.667e-7" />
     </inertial>
   </link>
 
@@ -144,7 +134,7 @@
     <origin rpy=" 0 0.262 0 " xyz="0.44278 0 0"/>
   </joint>
 
-  <link name="part4_base">
+    <link name="part4_base">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
@@ -153,12 +143,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
 
@@ -169,7 +161,6 @@
     <origin rpy="0 0 0" xyz="0.320 0 0.077 "/>
   </joint>
 
-
   <link name="part4_jaw1">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -179,22 +170,23 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
-
+  
   <joint name="part4_to_part4_jaw1" type="continuous">
     <parent link="part4_base"/>
     <child link="part4_jaw1"/>
     <axis xyz="0 -1 0"/>
     <origin rpy="0 0 0" xyz="0.07 0 0.04"/>
   </joint>
-
 
   <link name="part4_jaw2">
     <visual>
@@ -205,12 +197,14 @@
     </visual>
     <collision>
       <geometry>
-        <cylinder length="0.6" radius="0.2"/>
+        <box size="0.02 0.02 0.02" />
       </geometry>
     </collision>
     <inertial>
-      <mass value="10"/>
-      <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+      <mass value="0.01"/>
+      <inertia ixx="6.667e-7" ixy="0.0"       ixz="0.0"
+                              iyy="6.667e-7"  iyz="0.0"
+                                              izz="6.667e-7" />
     </inertial>
   </link>
 
