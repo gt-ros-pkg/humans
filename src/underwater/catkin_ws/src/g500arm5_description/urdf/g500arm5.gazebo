@@ -1,37 +1,75 @@
 <?xml version="1.0"?>
 <robot>
 
+  <gazebo>
+    <plugin name="uw_vel_cmd" filename="libuw_VelCmd.so">
+      <robot_namespace>iauv</robot_namespace>
+    </plugin>
+  </gazebo>
+
   <gazebo reference="base_link">
     <turnGravityOff>true</turnGravityOff>
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part0">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part1">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part2">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part3">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part4_base">
     <turnGravityOff>true</turnGravityOff>    
     <material>Gazebo/Black</material>
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
   
   <gazebo reference="part4_jaw1">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
   <gazebo reference="part4_jaw2">
     <turnGravityOff>true</turnGravityOff>    
+    <mu1>10</mu1>
+    <mu2>10</mu2>
+    <kp value="100000000.0"/>
+    <kd value="10000.0"/>
   </gazebo>
 
 </robot>
