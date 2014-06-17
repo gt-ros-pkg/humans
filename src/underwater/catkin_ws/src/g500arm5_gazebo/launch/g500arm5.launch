@@ -35,4 +35,7 @@
   </group>
   -->
 
+  <!-- Keyboard control of I-AUV -->
+  <include file="$(find underwater_vehicle_dynamics)/launch/UWSim_g500_dynamics.launch"/>
+
 </launch>
