@@ -86,11 +86,14 @@ namespace gazebo
      // Update the controller
      void VelCmd::UpdateChild()
      {
+          // The dynamics engine assumes that depth is positive Z, but
+          // Gazebo uses negative Z for depth
           math::Pose pose;
           pose.Set(math::Vector3(position_.x, position_.y, -position_.z),
                    math::Quaternion(quat_.w, quat_.x, 
                                     quat_.y, quat_.z));
-          
+
+          // Need to pause the world in order to use SetWorldPose
           bool is_paused = world_->IsPaused();
           world_->SetPaused(true);
           this->model_->SetWorldPose(pose);
@@ -102,17 +105,8 @@ namespace gazebo
           
           this->model_->SetAngularVel(math::Vector3(angular_vel_.x,
                                                     angular_vel_.y,
-                                                    angular_vel_.z));          
-          //if (count > 100) {
-          //     math::Pose pose = this->model_->GetWorldPose();
-          //     cout << pose.pos << " : " << pose.rot << endl;
-          //     //math::Vector3 lin_vel = this->model_->GetWorldLinearVel();
-          //     //math::Vector3 ang_vel = this->model_->GetWorldAngularVel();
-          //     //cout << "Linear Vel: " << lin_vel << " : " << ang_vel << endl;               
-          //     count = 0;
-          //}
-          //count++;                    
-     }     
+                                                    angular_vel_.z));                    
+     }
 
      void VelCmd::twist_cb(const geometry_msgs::Twist::ConstPtr& msg)
      {
