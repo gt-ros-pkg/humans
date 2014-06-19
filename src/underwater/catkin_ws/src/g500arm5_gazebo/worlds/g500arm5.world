@@ -1,25 +1,25 @@
 <sdf version='1.4'>
   <world name='default'>
 
-      <!--
-      <include>
-         <uri>model://g500arm5_description</uri>
-         <name>g500arm5_0</name>
-         <pose>0 0 5 0 0 0</pose>
-      </include>
-      <include>
-         <uri>model://g500arm5_description</uri>
-         <name>g500arm5_1</name>
-         <pose>2 2 4 0 0 0</pose>
-      </include>
-      -->
+    <!--
+        <include>
+        <uri>model://g500arm5_description</uri>
+        <name>g500arm5_0</name>
+        <pose>0 0 5 0 0 0</pose>
+        </include>
+        <include>
+        <uri>model://g500arm5_description</uri>
+        <name>g500arm5_1</name>
+        <pose>2 2 4 0 0 0</pose>
+        </include>
+    -->
 
-      <model name='ground_plane'>
+    <model name='ground_plane'>            
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
           <geometry>
-            <plane>
+            <plane>                          
               <normal>0 0 1</normal>
               <size>100 100</size>
             </plane>
@@ -62,6 +62,7 @@
         <gravity>1</gravity>
       </link>
     </model>
+    
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
       <pose>0 0 10 0 -0 0</pose>
@@ -93,7 +94,7 @@
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <link name='link'>
-          <pose>0 0 0 0 -0 0</pose>
+          <pose>0 0 -50 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -102,7 +103,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>6.02374 -6.5529 7.22752 0 0.363643 2.23619</pose>
+        <pose>-5 0 -4.5 0 0 0</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>

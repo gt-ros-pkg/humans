@@ -47,6 +47,8 @@ namespace gazebo
           // Store the pointer to the model
           this->model_ = _parent;
 
+          world_ = this->model_->GetWorld();
+
           // ROS Nodehandle
           this->nh_ = new ros::NodeHandle("~");          
           
@@ -72,33 +74,55 @@ namespace gazebo
                "/" + robot_namespace_+std::string("/vel_cmd"), 1000, 
                &VelCmd::twist_cb, this );          
 
+          this->sub_pose_ = this->nh_->subscribe<geometry_msgs::Pose>(
+               "/" + std::string("/g500/pose"), 1000, 
+               &VelCmd::pose_cb, this );          
+
           this->updateConnection_ = event::Events::ConnectWorldUpdateBegin(
                boost::bind(&VelCmd::UpdateChild, this));
      }
 
+     int count = 0;
      // Update the controller
      void VelCmd::UpdateChild()
      {
+          math::Pose pose;
+          pose.Set(math::Vector3(position_.x, position_.y, -position_.z),
+                   math::Quaternion(quat_.w, quat_.x, 
+                                    quat_.y, quat_.z));
+          
+          bool is_paused = world_->IsPaused();
+          world_->SetPaused(true);
+          this->model_->SetWorldPose(pose);
+          world_->SetPaused(is_paused);
+
           this->model_->SetLinearVel(math::Vector3(linear_vel_.x, 
                                                    linear_vel_.y, 
                                                    linear_vel_.z));
-
+          
           this->model_->SetAngularVel(math::Vector3(angular_vel_.x,
                                                     angular_vel_.y,
-                                                    angular_vel_.z));
-          //this->joint0_->SetForce(0, force_);
-          //this->joint1_->SetForce(0, force_);
-          //
-          //this->joint4_->SetForce(0, force_);
-          //this->joint5_->SetForce(0, force_);
-          //
-          //this->joint2_->SetAngle(0, gazebo::math::Angle(angle_));
-          //this->joint3_->SetAngle(0, gazebo::math::Angle(angle_));
+                                                    angular_vel_.z));          
+          //if (count > 100) {
+          //     math::Pose pose = this->model_->GetWorldPose();
+          //     cout << pose.pos << " : " << pose.rot << endl;
+          //     //math::Vector3 lin_vel = this->model_->GetWorldLinearVel();
+          //     //math::Vector3 ang_vel = this->model_->GetWorldAngularVel();
+          //     //cout << "Linear Vel: " << lin_vel << " : " << ang_vel << endl;               
+          //     count = 0;
+          //}
+          //count++;                    
      }     
 
      void VelCmd::twist_cb(const geometry_msgs::Twist::ConstPtr& msg)
      {
           linear_vel_ = msg->linear;
           angular_vel_ = msg->angular;
+     }
+
+     void VelCmd::pose_cb(const geometry_msgs::Pose::ConstPtr& msg)
+     {
+          position_ = msg->position;
+          quat_ = msg->orientation;          
      }
 }

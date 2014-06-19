@@ -4,6 +4,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/Pose.h>
  
 #include <gazebo/physics/physics.hh>
 #include <gazebo/transport/TransportTypes.hh>
@@ -22,7 +23,8 @@ namespace gazebo
           void Load( physics::ModelPtr _parent, sdf::ElementPtr _sdf );
           
           void twist_cb(const geometry_msgs::Twist::ConstPtr& msg);
- 
+          void pose_cb(const geometry_msgs::Pose::ConstPtr& msg);
+
      protected: 
           virtual void UpdateChild();
  
@@ -44,8 +46,14 @@ namespace gazebo
           geometry_msgs::Vector3 linear_vel_;
           geometry_msgs::Vector3 angular_vel_;
 
+          geometry_msgs::Point position_;
+          geometry_msgs::Quaternion quat_;
+
+          gazebo::physics::WorldPtr world_;
+          
           // ROS Subscriber
           ros::Subscriber sub_twist_;
+          ros::Subscriber sub_pose_;
      };
 }
  

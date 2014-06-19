@@ -23,19 +23,26 @@
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-	args="-urdf -model g500arm5 -param robot_description -x 0 -y 0 -z 5"/>
+	args="-urdf -model g500arm5 -param robot_description -x 0 -y 0 -z -5"/>
 
   <!-- The sdf file is generated with the sim.sh script due to the gravity 
        bug. (OLD WAY).
-      It turns out you need to use the trunGravityOff tag, not the gravity tag.
-  <group ns="robot_0">    
-    <node name="spawn_urdf_robot_0" pkg="gazebo_ros" type="spawn_model" 
-          args="-file $(find g500arm5_description)/urdf/g500arm5.sdf -sdf 
-                -robot_namespace robot_0 -x 0 -y 0 -z 5 -model g500arm5" />
-  </group>
+       It turns out you need to use the trunGravityOff tag, not the gravity tag.
+       <group ns="robot_0">    
+       <node name="spawn_urdf_robot_0" pkg="gazebo_ros" type="spawn_model" 
+       args="-file $(find g500arm5_description)/urdf/g500arm5.sdf -sdf 
+       -robot_namespace robot_0 -x 0 -y 0 -z 5 -model g500arm5" />
+       </group>
   -->
 
-  <!-- Keyboard control of I-AUV -->
-  <include file="$(find underwater_vehicle_dynamics)/launch/UWSim_g500_dynamics.launch"/>
+  <!-- IAUV Dynamics -->
+  <include file="$(find underwater_vehicle_dynamics)/launch/dynamics.launch">
+    <arg name="namespace" value="g500" />
+    <arg name="params" value="$(find underwater_vehicle_dynamics)/config/dynamics_g500.yaml" />
+  </include>
+  <rosparam param="/g500/dynamics/external_force_topic">g500/ForceSensor</rosparam>
 
+  <arg name="thrusters_topic" default="/g500/thrusters_input" />
+  <node name="keyboard_command" pkg="underwater_vehicle_dynamics" type="keyboard.py" args="$(arg thrusters_topic)" output="screen" respawn="false"/>
+  
 </launch>

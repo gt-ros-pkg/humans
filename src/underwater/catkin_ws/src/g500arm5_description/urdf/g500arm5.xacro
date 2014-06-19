@@ -8,7 +8,7 @@
 
   <link name="base_link">
     <visual>
-      <origin rpy="1.57 0 3.14156" xyz="0 0 0"/>
+      <origin rpy="1.57079 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://g500arm5_description/meshes/GIRONA500/g500.dae"/>
       </geometry>
