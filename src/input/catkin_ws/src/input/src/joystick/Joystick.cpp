@@ -1,6 +1,9 @@
 #include <iostream>
 #include <stdio.h>
+#include <unistd.h>
+
 #include "Joystick.h"
+
 
 using std::cout;
 using std::endl;

@@ -4,7 +4,7 @@
 /// @file Joystick.h
 /// @author syllogismrxs <syllogismrxs@syllogismrxs-HP-EliteBook-6930p>
 ///
-/// Time-stamp: <2013-09-04 14:02:17 syllogismrxs>
+/// Time-stamp: <2014-11-12 13:44:11 syllogismrxs>
 ///
 /// @version 1.0
 /// Created: 19 Feb 2013

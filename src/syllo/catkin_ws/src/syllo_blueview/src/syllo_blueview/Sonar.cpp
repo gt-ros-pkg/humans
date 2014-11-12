@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <unistd.h>
 #include <fstream>
 
 #include <syllo_blueview/Sonar.h>

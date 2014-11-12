@@ -14,3 +14,6 @@ for (( idx=${#PACKAGES[@]}-1 ; idx>=0 ; idx-- )) ; do
     ./clean.sh
     popd >& /dev/null
 done
+
+# Remove .catkin_worspace files
+find . -name ".catkin_workspace" | xargs rm
