@@ -1,0 +1,4 @@
+setenv.sh
+.catkin_workspace
+build
+devel
