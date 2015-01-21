@@ -311,7 +311,7 @@ Sonar::Status_t Sonar::getSonarImage(cv::Mat &image, int index)
      //cv::Mat tempImg = sonarImg);
      //image = sonarImg;     
      image = cv::cvarrToMat(sonarImg); // opencv3?
-
+     
      cvReleaseImageHeader(&sonarImg);
      BVTPing_Destroy(ping);
 
