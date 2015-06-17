@@ -24,6 +24,16 @@
 
 #define TX_CTRL_SIZE     15
 
+// These numbers correspond to their placement in the data packet
+#define AUTO_DEPTH_P_LSB 0
+#define AUTO_DEPTH_P_MSB 1
+#define AUTO_DEPTH_I_LSB 2
+#define AUTO_DEPTH_I_MSB 3
+#define AUTO_DEPTH_D_LSB 4
+#define AUTO_DEPTH_D_MSB 5
+#define AUTO_DEPTH_K_LSB 6
+#define AUTO_DEPTH_K_MSB 7
+
 ////////////////////////////////
 //// RX Control Packet Defines
 ////////////////////////////////
@@ -344,6 +354,84 @@ VideoRayComm::Status_t VideoRayComm::send_control_command()
      packetizer_.set_csr_addr(0x00);          
      packetizer_.set_data(tx_ctrl_data, TX_CTRL_SIZE);
      bytes = packetizer_.generate_packet(&packet);    
+     
+     // Send the Tx Control packet over the serial line
+     serial_.Write((const void *)packet, bytes);
+     
+     int test = 0;
+     char byte;
+     Packetizer::Status_t status;
+     do {
+          if (serial_.ReadChar(&byte,0) == 1) {
+               status = receiver_.receive_packet(byte);
+          } else {
+               // Did not receive a byte, break out.
+               printf("Error reading byte.\n");
+               break;
+          }       
+          test++;
+          if (test > 100) break;
+     } while(status == Packetizer::In_Progress);
+     
+     //if (status == Packetizer::Success) {
+     //     bytes = receiver_.get_payload(&packet);
+          
+          //for (int x = 0 ; x < bytes ; x++) {
+          //     printf("%x ", (unsigned char)packet[x]);
+          //}
+          //printf("\n");
+          //short temp = 0;
+          //temp = ((short)(packet[HEADING_MSB]) << 8) | packet[HEADING_LSB]; 
+          //heading_ = temp;
+          //
+          //temp = 0;
+          //temp = ((short)(packet[PITCH_MSB]) << 8) | packet[PITCH_LSB]; 
+          //pitch_ = temp;
+          //
+          //temp = 0;
+          //temp = ((short)(packet[ROLL_MSB]) << 8) | packet[ROLL_LSB]; 
+          //roll_ = temp;
+                    
+     //} else {
+     //     printf("Control Command - Decode Error.\n");
+     //     printf("Status: %d\n", status);
+     //     printf("Flushing receiver.\n");
+     //     serial_.FlushReceiver();
+     //}
+     serial_.FlushReceiver();
+     return VideoRayComm::Success;
+}
+
+// Just added for Steven's Institute
+VideoRayComm::Status_t VideoRayComm::set_depth_pid_parameters()
+{
+     char * packet;
+     int bytes;
+     
+     // Holds data for addresses 0x26 through 0x2D
+     // You should pass the values for these PID variables as parameters
+     // into this function.
+     char data[8];
+     data[AUTO_DEPTH_P_LSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_P_MSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_I_LSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_I_MSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_D_LSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_D_MSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_K_LSB] = 23; // arbitrary data.
+     data[AUTO_DEPTH_K_MSB] = 23; // arbitrary data.
+     
+     // Generate Packet and grab reference to it
+     packetizer_.set_network_id(0x01); // Network ID for videoray
+     packetizer_.set_flags(0x00); // No response expected
+     packetizer_.set_csr_addr(0x26);          
+     
+     packetizer_.set_data(data, 8);
+     bytes = packetizer_.generate_packet(&packet);    
+
+     // You might want to print out the contents of packet at this point and
+     // make sure that all of the bytes look correct as far as the
+     // communication protocol is concerned.
      
      // Send the Tx Control packet over the serial line
      serial_.Write((const void *)packet, bytes);

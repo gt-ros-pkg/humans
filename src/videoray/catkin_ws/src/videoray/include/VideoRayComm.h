@@ -4,7 +4,7 @@
 /// @file VideoRayComm.h
 /// @author Kevin DeMarco <kevin.demarco@gmail.com>
 ///
-/// Time-stamp: <2014-01-21 12:40:52 syllogismrxs>
+/// Time-stamp: <2015-06-17 13:10:48 syllogismrxs>
 ///
 /// @version 1.0
 /// Created: 13 Aug 2013
@@ -85,6 +85,8 @@ public:
      Status_t set_manipulator_state(ManipState_t state);
 
      Status_t send_control_command();
+     Status_t set_depth_pid_parameters();     
+
      Status_t send_nav_data_command();
      Status_t request_status();
 
