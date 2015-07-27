@@ -40,6 +40,12 @@
 #include <QMessageBox>
 #include <QPainter>
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <stdio.h>
+#include <time.h> 
+
 using std::cout;
 using std::endl;
 
@@ -73,8 +79,23 @@ namespace rqt_experiment_notes {
           //connect(ui_.set_heading_button, SIGNAL(clicked(bool)), this, SLOT(onSetHeading(bool)));
           
           // Create publish and subscriber example
-          this->notes_pub_ = getNodeHandle().advertise<videoray::Notes>("experiment_notes", 10);
+          this->notes_pub_ = getNodeHandle().advertise<std_msgs::String>("experiment_notes", 10);
           //this->subscriber_ = getNodeHandle().subscribe<std_msgs::Int32>("WRITE_HERE", 1, &experiment_notes::callbackNum, this);         
+
+          // Determine home directory
+          struct passwd *pw = getpwuid(getuid());
+          const char *homedir = pw->pw_dir;
+
+          // Get time string
+          time_t rawtime;
+          struct tm * timeinfo;
+          char time_buf [80];
+          time (&rawtime);
+          timeinfo = localtime (&rawtime);
+          strftime (time_buf,80,"%Y_%m_%d-%H:%M:%S",timeinfo);
+
+          filename_ = std::string(homedir) + "/experiment-" + std::string(time_buf) + ".txt";
+          fd_.open(filename_.c_str());
      }
      
 
@@ -86,6 +107,7 @@ namespace rqt_experiment_notes {
      void experiment_notes::shutdownPlugin()
      {
           //subscriber_.shutdown();
+          fd_.close();
           notes_pub_.shutdown();
      }
      
@@ -105,37 +127,25 @@ namespace rqt_experiment_notes {
           ui_.notes->clear();
      }
      void experiment_notes::onSave()
-     {
-          videoray::Notes notes;
-          notes.header.stamp = ros::Time::now();
-          notes.notes = ui_.notes->toPlainText().toStdString();
-          if (notes.notes != "") {
-               notes_pub_.publish(notes);
+     {         
+          std_msgs::String msg;
+          msg.data = ui_.notes->toPlainText().toStdString();
+          if (msg.data != "") {               
+               notes_pub_.publish(msg);
+               fd_ << ros::Time::now() << " ";
+               fd_ << msg.data << endl;
           }
           ui_.notes->clear();
+          //videoray::Notes notes;
+          //notes.header.stamp = ros::Time::now();
+          //notes.notes = ui_.notes->toPlainText().toStdString();
+          //if (notes.notes != "") {
+          //     notes_pub_.publish(notes);
+          //     fd_ << notes.header.stamp << " ";
+          //     fd_ << ui_.notes->toPlainText().toStdString() << endl;
+          //}
+          //ui_.notes->clear();
      }
-     //void experiment_notes::onSetHeading(bool checked)
-     //{
-     //     //std::ostringstream str;
-     //     //str << ui_.desired_heading_double_spin_box->value();
-     //     //
-     //     //std_msgs::String msg;
-     //     //msg.data = "Desired Heading set: " + str.str();
-     //     //publisher_.publish(msg);
-     //     //
-     //     //std::cout << "Heading: "<< msg.data << std::endl;          
-     //}
-     //
-     //void experiment_notes::onEnableDesiredHeading(bool checked)
-     //{
-     //     ui_.desired_heading_double_spin_box->setEnabled(checked);
-     //     ui_.set_heading_button->setEnabled(checked);          
-     //}
-     //
-     //void experiment_notes::callbackNum(const std_msgs::Int32ConstPtr& msg)
-     //{
-     //     cout << "Received: " << msg->data << endl;
-     //}     
 }
 
 PLUGINLIB_EXPORT_CLASS(rqt_experiment_notes::experiment_notes, rqt_gui_cpp::Plugin)

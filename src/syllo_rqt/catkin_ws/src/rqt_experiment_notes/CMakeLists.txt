@@ -33,7 +33,7 @@ set(rqt_experiment_notes_INCLUDE_DIRECTORIES
 catkin_package(
 	INCLUDE_DIRS ${rqt_experiment_notes_INCLUDE_DIRECTORIES}
 	LIBRARIES ${PROJECT_NAME} 
-	CATKIN_DEPENDS rqt_gui rqt_gui_cpp videoray
+	CATKIN_DEPENDS rqt_gui rqt_gui_cpp
 )
 catkin_python_setup()
 

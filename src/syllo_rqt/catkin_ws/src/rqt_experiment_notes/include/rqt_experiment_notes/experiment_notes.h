@@ -33,11 +33,13 @@
 #ifndef rqt_experiment_notes__experiment_notes_H
 #define rqt_experiment_notes__experiment_notes_H
 
+#include <iostream>
+#include <fstream>
+
 // ROS headers
 #include <ros/ros.h>
 #include <rqt_gui_cpp/plugin.h>
 #include <std_msgs/Int32.h>
-#include <videoray/Notes.h>
 
 // Qt headers
 #include <QImage>
@@ -99,6 +101,8 @@ namespace rqt_experiment_notes {
           ros::Publisher notes_pub_;
           //ros::Subscriber subscriber_;
 
+          std::ofstream fd_;
+          std::string filename_;
      };
 
 }
